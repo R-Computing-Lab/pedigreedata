@@ -1,8 +1,8 @@
 ---
-title: "Kluane Red Squirrel Project Data"
+title: "Red Squirrels: 35 years of a wild population"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Kluane Red Squirrel Project Data}
+  %\VignetteIndexEntry{Red Squirrels: 35 years of a wild population}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -10,120 +10,283 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment  = "#>",
+  message  = FALSE,
+  warning  = FALSE,
+  fig.width  = 7,
+  fig.height = 4.5
 )
 ```
 
+# Overview
+
+The `red_squirrels` dataset comes from the **Kluane Red Squirrel Project**,
+a long-term field study of North American red squirrels (*Tamiasciurus
+hudsonicus*) in the boreal forests of Yukon, Canada, running continuously
+since 1987. Every squirrel in the population is individually marked, and
+its parentage, birth year, death year, and reproductive output are
+recorded across its lifetime.
+
+The result is one of the most complete wild-animal pedigrees ever assembled:
+`r nrow(pedigreedata::red_squirrels)` individuals spanning over three
+decades, with fitness measures for most of them.
+
 ```{r load}
 library(pedigreedata)
-```
+library(ggplot2)
+library(dplyr)
 
-## Overview
-
-The `redsquirrels` and `redsquirrels_full` datasets contain pedigree and
-fitness data from the **Kluane Red Squirrel Project**, a long-term field study
-of North American red squirrels (*Tamiasciurus hudsonicus*) in Yukon, Canada,
-running continuously since 1987.
-
-Two versions of the dataset are provided:
-
-| Dataset | Description | Rows |
-|---------|-------------|------|
-| `redsquirrels` | Families with at least one recorded father; core fitness columns | `r nrow(redsquirrels)` |
-| `redsquirrels_full` | All individuals; full ARS summary statistics | `r nrow(redsquirrels_full)` |
-
-**ARS** = Annual Reproductive Success (offspring recruited per year).
-**LRS** = Lifetime Reproductive Success (total offspring recruited).
-
----
-
-## Core dataset (`redsquirrels`)
-
-```{r head}
-head(redsquirrels)
-```
-
-```{r str}
-str(redsquirrels)
-```
-
-### Sex distribution
-
-```{r sex}
-table(Sex = redsquirrels$sex, useNA = "ifany")
-```
-
-### Founders and pedigree depth
-
-```{r founders}
-founders <- redsquirrels[is.na(redsquirrels$momID) & is.na(redsquirrels$dadID), ]
-cat("Total individuals: ", nrow(redsquirrels), "\n")
-cat("Founders:          ", nrow(founders), "\n")
-cat("Non-founders:      ", nrow(redsquirrels) - nrow(founders), "\n")
-```
-
-### Birth and death years
-
-```{r years}
-cat("Birth years: ", range(redsquirrels$byear, na.rm = TRUE), "\n")
-cat("Death years: ", range(redsquirrels$dyear, na.rm = TRUE), "\n")
-cat("Missing byear:", sum(is.na(redsquirrels$byear)), "\n")
-cat("Missing dyear:", sum(is.na(redsquirrels$dyear)), "\n")
-```
-
-### Fitness measures
-
-```{r fitness}
-cat("--- Lifetime Reproductive Success (LRS) ---\n")
-summary(redsquirrels$lrs)
-cat("\n--- Mean Annual Reproductive Success (ARS) ---\n")
-summary(redsquirrels$ars_mean)
-```
-
-```{r fitness-plot, fig.width = 6, fig.height = 4}
-# LRS distribution by sex
-lrs_f <- redsquirrels$lrs[redsquirrels$sex == "F" & !is.na(redsquirrels$lrs)]
-lrs_m <- redsquirrels$lrs[redsquirrels$sex == "M" & !is.na(redsquirrels$lrs)]
-
-breaks <- seq(0, max(redsquirrels$lrs, na.rm = TRUE) + 2, by = 2)
-hist(lrs_f, breaks = breaks, col = adjustcolor("#E41A1C", 0.5),
-     xlab = "Lifetime Reproductive Success", main = "LRS by sex",
-     ylim = c(0, max(hist(lrs_f, breaks = breaks, plot = FALSE)$counts,
-                     hist(lrs_m, breaks = breaks, plot = FALSE)$counts) * 1.1))
-hist(lrs_m, breaks = breaks, col = adjustcolor("#377EB8", 0.5), add = TRUE)
-legend("topright", legend = c("Female", "Male"),
-       fill = adjustcolor(c("#E41A1C", "#377EB8"), 0.5), bty = "n")
+data(red_squirrels)
+head(red_squirrels)
 ```
 
 ---
 
-## Full dataset (`redsquirrels_full`)
+# The study population over time
 
-`redsquirrels_full` retains all individuals (including those in matrilineal-only
-families) and adds year-by-year ARS summary statistics.
+## When were squirrels born?
 
-```{r full-head}
-head(redsquirrels_full)
+The project began marking squirrels in 1987. Birth year coverage shows
+how the monitored population grew — and which years had the most recruits.
+
+```{r birth-years, fig.height = 3.5}
+red_squirrels |>
+  filter(!is.na(byear)) |>
+  count(byear) |>
+  ggplot(aes(x = byear, y = n)) +
+  geom_col(fill = "#E41A1C", alpha = 0.8) +
+  labs(title = "Number of squirrels born per year",
+       x = "Birth year", y = "Count") +
+  theme_minimal()
 ```
 
-```{r full-extra}
-cat("Additional columns in redsquirrels_full:\n")
-setdiff(names(redsquirrels_full), names(redsquirrels))
+The spikes in some years reflect the boreal forest's **mast cycle** —
+periodic high cone production that triggers a population boom in red
+squirrels (a phenomenon called the "Chitty effect" in this system).
+
+## Lifespan: birth to death
+
+For individuals with both birth and death years recorded, we can look
+at the distribution of lifespans.
+
+```{r lifespan, fig.height = 3.5}
+red_squirrels |>
+  filter(!is.na(byear), !is.na(dyear)) |>
+  mutate(lifespan = dyear - byear) |>
+  filter(lifespan >= 0) |>
+  ggplot(aes(x = lifespan, fill = sex)) +
+  geom_histogram(binwidth = 1, alpha = 0.7, position = "identity") +
+  scale_fill_brewer(palette = "Set1",
+                    labels = c("F" = "Female", "M" = "Male")) +
+  labs(title = "Lifespan distribution by sex",
+       x = "Lifespan (years)", y = "Count", fill = "Sex") +
+  theme_minimal()
 ```
 
-```{r full-ars}
-cat("ARS observation counts (ars_n):\n")
-summary(redsquirrels_full$ars_n)
-cat("\nObservation span (years):\n")
-span <- redsquirrels_full$year_last - redsquirrels_full$year_first
-summary(span[!is.na(span)])
+```{r lifespan-summary}
+red_squirrels |>
+  filter(!is.na(byear), !is.na(dyear), !is.na(sex)) |>
+  mutate(lifespan = dyear - byear) |>
+  filter(lifespan >= 0) |>
+  group_by(Sex = sex) |>
+  summarise(
+    n          = n(),
+    mean_years = round(mean(lifespan), 2),
+    max_years  = max(lifespan)
+  )
 ```
 
 ---
 
-## Citation
+# Pedigree structure
 
-If you use these data, please cite the original Dryad deposit:
+## Founders and family depth
 
-> McFarlane, S.E., et al. (2015). Kluane Red Squirrel Project pedigree and
-> fitness data. Dryad. <https://doi.org/10.5061/dryad.n5q05>
+```{r pedigree-overview}
+cat("Total individuals:  ", nrow(red_squirrels), "\n")
+cat("Founders:           ",
+    sum(is.na(red_squirrels$momID) & is.na(red_squirrels$dadID)), "\n")
+cat("With both parents:  ",
+    sum(!is.na(red_squirrels$momID) & !is.na(red_squirrels$dadID)), "\n")
+cat("Number of families: ", n_distinct(red_squirrels$famID), "\n")
+```
+
+## Family sizes
+
+The dataset includes `r n_distinct(red_squirrels$famID)` distinct family
+groups. Most are small (wild territorial animals rarely aggregate), but
+a subset of well-connected lineages spans multiple generations.
+
+```{r family-sizes, fig.height = 3.5}
+red_squirrels |>
+  count(famID) |>
+  ggplot(aes(x = n)) +
+  geom_histogram(binwidth = 2, fill = "#377EB8", alpha = 0.8) +
+  labs(title = "Distribution of family group sizes",
+       x = "Individuals per family", y = "Number of families") +
+  theme_minimal()
+```
+
+## Validate the pedigree
+
+Before plotting, we validate the pedigree structure. `checkSex()` standardizes
+sex coding; `checkParentIDs()` adds phantom placeholders for parents with no
+row of their own; `checkPedigreeNetwork()` confirms there are no impossible
+ancestry loops.
+
+```{r validate}
+sq <- checkSex(red_squirrels,
+  code_male   = "M",
+  code_female = "F",
+  verbose     = TRUE,
+  repair      = TRUE
+)
+
+sq <- checkParentIDs(sq,
+  addphantoms       = TRUE,
+  repair            = TRUE,
+  parentswithoutrow = FALSE,
+  repairsex         = FALSE
+)
+
+net <- checkPedigreeNetwork(sq,
+  personID = "personID",
+  momID    = "momID",
+  dadID    = "dadID",
+  verbose  = TRUE
+)
+cat("Pedigree is acyclic:", net$is_acyclic, "\n")
+```
+
+## A single family pedigree
+
+```{r single-family, eval = requireNamespace("ggpedigree", quietly = TRUE), fig.width = 8, fig.height = 5}
+library(ggpedigree)
+
+# Pick a mid-sized family with known parentage for a clean plot
+fam_summary <- sq |>
+  filter(!is.na(momID) | !is.na(dadID)) |>
+  count(famID) |>
+  filter(n >= 15, n <= 30) |>
+  arrange(desc(n))
+
+focal_fam <- sq |> filter(famID == fam_summary$famID[1])
+
+ggPedigree(focal_fam,
+  personID = "personID",
+  momID    = "momID",
+  dadID    = "dadID",
+  config   = list(
+    add_phantoms = TRUE,
+    code_male    = "M",
+    code_female  = "F"
+  )
+)
+```
+
+---
+
+# Fitness: how many offspring do squirrels produce?
+
+## Lifetime reproductive success (LRS)
+
+LRS is the total number of offspring an individual produced that survived
+to independence across its entire life — the closest field equivalent of
+Darwinian fitness.
+
+```{r lrs-dist, fig.height = 3.5}
+red_squirrels |>
+  filter(!is.na(lrs), !is.na(sex)) |>
+  ggplot(aes(x = lrs, fill = sex)) +
+  geom_histogram(binwidth = 1, alpha = 0.7, position = "identity") +
+  scale_fill_brewer(palette = "Set1",
+                    labels = c("F" = "Female", "M" = "Male")) +
+  labs(title = "Lifetime reproductive success (LRS) by sex",
+       x = "LRS", y = "Count", fill = "Sex") +
+  theme_minimal()
+```
+
+```{r lrs-summary}
+red_squirrels |>
+  filter(!is.na(lrs), !is.na(sex)) |>
+  group_by(Sex = sex) |>
+  summarise(
+    n         = n(),
+    mean_lrs  = round(mean(lrs), 2),
+    median    = median(lrs),
+    max_lrs   = max(lrs),
+    prop_zero = round(mean(lrs == 0), 2)
+  )
+```
+
+The right skew is a universal feature of fitness distributions: most
+individuals produce few or no recruits, while a small number are
+extraordinarily productive. Notice that a large proportion have LRS = 0.
+
+## Annual reproductive success (ARS)
+
+ARS captures productivity in a single year, averaged across all years
+the individual was observed. It is less sensitive to lifespan differences
+than LRS.
+
+```{r ars-dist, fig.height = 3.5}
+red_squirrels |>
+  filter(!is.na(ars_mean), !is.na(sex)) |>
+  ggplot(aes(x = ars_mean, fill = sex)) +
+  geom_histogram(binwidth = 0.25, alpha = 0.7, position = "identity") +
+  scale_fill_brewer(palette = "Set1",
+                    labels = c("F" = "Female", "M" = "Male")) +
+  labs(title = "Mean annual reproductive success (ARS) by sex",
+       x = "Mean ARS", y = "Count", fill = "Sex") +
+  theme_minimal()
+```
+
+## Does reproductive success change over the study period?
+
+Population-level fitness can vary with environmental conditions. Here
+we look at mean LRS by birth cohort.
+
+```{r lrs-over-time, fig.height = 3.5}
+red_squirrels |>
+  filter(!is.na(byear), !is.na(lrs)) |>
+  group_by(byear) |>
+  summarise(mean_lrs = mean(lrs), n = n()) |>
+  filter(n >= 10) |>
+  ggplot(aes(x = byear, y = mean_lrs)) +
+  geom_point(aes(size = n), alpha = 0.6, color = "#E41A1C") +
+  geom_smooth(method = "loess", se = TRUE, color = "black") +
+  scale_size_continuous(range = c(1, 5)) +
+  labs(title = "Mean LRS by birth cohort (cohorts with n ≥ 10)",
+       x = "Birth year", y = "Mean LRS", size = "Cohort size") +
+  theme_minimal()
+```
+
+Variation in mean LRS across birth cohorts reflects the boom-bust dynamics
+of this population, driven by the mast cycle and other environmental factors.
+
+---
+
+# Missing data
+
+Not all individuals have complete records — founders by definition lack
+parent IDs, and not all individuals have fitness data.
+
+```{r missing}
+data.frame(
+  Variable = c("momID", "dadID", "byear", "dyear", "lrs", "ars_mean"),
+  Missing  = sapply(
+    red_squirrels[c("momID", "dadID", "byear", "dyear", "lrs", "ars_mean")],
+    function(x) paste0(sum(is.na(x)), " (",
+                       round(mean(is.na(x)) * 100, 1), "%)")
+  )
+)
+```
+
+---
+
+# Source
+
+McFarlane, S.E., Boutin, S., Humphries, M.M., et al. (2015). Very low
+levels of direct additive genetic variance in fitness and fitness components
+in a red squirrel population. Dryad.
+<https://doi.org/10.5061/dryad.n5q05>

@@ -19,6 +19,10 @@ BugReports: https://github.com/R-Computing-Lab/pedigreedata/issues
 Depends:
     R (>= 4.1.0)
 Suggests:
+    BGmisc (>= 1.4.1),
+    dplyr,
+    ggplot2,
+    ggpedigree,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0),

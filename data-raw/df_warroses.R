@@ -33,7 +33,7 @@ df <- ped2fam(ged, personID = "id") %>%
 # )
 
 
-warsofroses <- df %>%
+war_of_the_roses <- df %>%
   select(-famID) %>%
   ped2fam(personID = "personID", famID = "famID") %>%
   rename(
@@ -41,7 +41,7 @@ warsofroses <- df %>%
   )
 
 # checks
-df_repaired <- checkSex(warsofroses,
+df_repaired <- checkSex(war_of_the_roses,
   code_male = "M",
   code_female = "F",
   verbose = TRUE, repair = TRUE
@@ -97,13 +97,13 @@ checkis_acyclic <- checkPedigreeNetwork(df_repaired,
 checkis_acyclic
 if (checkis_acyclic$is_acyclic) {
   message("The pedigree is acyclic.")
-  write_csv(warsofroses, here("data-raw", "warsofroses.csv"))
-  usethis::use_data(warsofroses, overwrite = TRUE, compress = "xz")
+  write_csv(war_of_the_roses, here("data-raw", "war_of_the_roses.csv"))
+  usethis::use_data(war_of_the_roses, overwrite = TRUE, compress = "xz")
 } else {
   message("The pedigree contains cyclic relationships.")
 }
 
-warsofroses %>%
+war_of_the_roses %>%
   filter(is.na(momID) & is.na(dadID)) %>%
   select(id, name, famID, momID, dadID, sex) %>%
   mutate(

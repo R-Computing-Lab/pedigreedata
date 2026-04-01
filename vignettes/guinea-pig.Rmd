@@ -1,8 +1,8 @@
 ---
-title: "Guinea Pig Pedigree and Growth Data"
+title: "Guinea Pigs: A four-generation breeding study"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Guinea Pig Pedigree and Growth Data}
+  %\VignetteIndexEntry{Guinea Pigs: A four-generation breeding study}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -10,160 +10,363 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment  = "#>",
+  message  = FALSE,
+  warning  = FALSE,
+  fig.width  = 7,
+  fig.height = 4.5
 )
 ```
+
+# Overview
+
+The `guinea_pigs` dataset records pedigree and body weight measurements from
+a four-generation controlled breeding program of domestic guinea pigs
+(*Cavia porcellus*). Guinea pigs — known as *cuy* in Andean countries — are
+an important livestock species in South America. This dataset captures
+`r nrow(pedigreedata::guinea_pigs)` individuals, each with up to six body
+weight measurements (days 0, 15, 30, 45, 60, and 90), along with pedigree
+links, litter information, coat color, season of birth, and housing pen.
 
 ```{r load}
 library(pedigreedata)
-```
+library(BGmisc)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
 
-## Overview
-
-This vignette describes the guinea pig (*Cavia porcellus*) datasets included in
-`pedigreedata`. The data come from a four-generation breeding study and are
-available from Figshare
-([doi:10.6084/m9.figshare.31513204.v2](https://doi.org/10.6084/m9.figshare.31513204.v2)).
-
-Four related datasets are provided:
-
-| Dataset | Description | Rows |
-|---------|-------------|------|
-| `ped` | Pedigree only (ID, sire, dam) | `r nrow(ped)` |
-| `pheno` | Phenotype and weight measurements | `r nrow(pheno)` |
-| `ped_pheno` | Full join of pedigree and phenotype | `r nrow(ped_pheno)` |
-| `ped_growth` | Long-format growth trajectories | `r nrow(ped_growth)` |
-
----
-
-## Pedigree structure (`ped`)
-
-```{r ped-head}
-head(ped)
-```
-
-```{r ped-summary}
-# Founders: individuals with no recorded parents
-founders <- ped[is.na(ped$dadID) & is.na(ped$momID), ]
-cat("Total individuals:", nrow(ped), "\n")
-cat("Founders (no parents recorded):", nrow(founders), "\n")
-cat("Non-founders:", nrow(ped) - nrow(founders), "\n")
+data(guinea_pigs)
 ```
 
 ---
 
-## Phenotype data (`pheno`)
+# The pedigree
 
-### Structure
+## Validate the pedigree
 
-```{r pheno-head}
-head(pheno)
-```
+Before exploring the data, we validate the pedigree structure using
+[BGmisc](https://github.com/R-Computing-Lab/BGmisc). `checkSex()` standardizes
+sex coding and flags inconsistencies; `checkParentIDs()` identifies individuals
+listed as parents who have no row of their own (adding phantom placeholders
+where needed); `checkPedigreeNetwork()` confirms the pedigree is acyclic —
+no individual can be their own ancestor.
 
-```{r pheno-str}
-str(pheno)
-```
-
-### Sample characteristics
-
-```{r pheno-sex}
-table(Sex = pheno$sexo, useNA = "ifany")
-```
-
-```{r pheno-season}
-table(Season = pheno$clima, useNA = "ifany")
-```
-
-```{r pheno-color}
-table(Color = pheno$color, useNA = "ifany")
-```
-
-```{r pheno-generation}
-table(Generation = pheno$gener, useNA = "ifany")
-```
-
-### Weight measurements
-
-```{r pheno-weights}
-weight_cols <- c("p0", "p15", "p30", "p45", "p60", "p90")
-weight_summary <- sapply(pheno[weight_cols], function(x) {
-  c(
-    n       = sum(!is.na(x)),
-    missing = sum(is.na(x)),
-    mean    = round(mean(x, na.rm = TRUE), 1),
-    sd      = round(sd(x, na.rm = TRUE), 1),
-    min     = min(x, na.rm = TRUE),
-    max     = max(x, na.rm = TRUE)
-  )
-})
-t(weight_summary)
-```
-
----
-
-## Growth trajectories (`ped_growth`)
-
-`ped_growth` is a long-format version suitable for plotting or mixed models,
-with one row per individual per measurement day.
-
-```{r growth-head}
-head(ped_growth)
-```
-
-```{r growth-plot, fig.width = 6, fig.height = 4}
-# Random sample of 500 individuals to keep plot readable
-set.seed(42)
-sample_ids <- sample(unique(ped_growth$ID), 500)
-plot_data  <- ped_growth[ped_growth$ID %in% sample_ids, ]
-
-# Remove rows with missing sex or weight
-plot_data <- plot_data[!is.na(plot_data$sexo) & !is.na(plot_data$weight), ]
-
-# Base R plot
-palette(c("#E41A1C", "#377EB8"))
-plot(
-  weight ~ day,
-  data  = plot_data,
-  col   = adjustcolor(as.factor(plot_data$sexo), alpha.f = 0.07),
-  pch   = 16, cex = 0.6,
-  xlab  = "Day", ylab = "Weight (g)",
-  main  = "Growth trajectories (sample of 500 individuals)",
-  axes  = FALSE
+```{r validate-sex}
+gp <- checkSex(guinea_pigs,
+  code_male   = "M",
+  code_female = "H",
+  verbose     = TRUE,
+  repair      = TRUE
 )
-axis(1, at = c(0, 15, 30, 45, 60, 90))
-axis(2)
-box()
+```
 
-# Loess smoother per sex
-for (s in c("H", "M")) {
-  d <- plot_data[plot_data$sexo == s, ]
-  lo <- loess(weight ~ day, data = d, span = 0.5)
-  day_seq <- seq(0, 90, by = 1)
-  lines(day_seq, predict(lo, newdata = data.frame(day = day_seq)),
-        col = as.integer(as.factor(s)), lwd = 2)
-}
-legend("topleft", legend = c("Female (H)", "Male (M)"),
-       col = 1:2, lwd = 2, bty = "n")
+```{r validate-parents}
+gp <- checkParentIDs(gp,
+  addphantoms       = TRUE,
+  repair            = TRUE,
+  parentswithoutrow = FALSE,
+  repairsex         = FALSE
+)
+```
+
+```{r validate-network}
+net <- checkPedigreeNetwork(gp,
+  personID = "ID",
+  momID    = "momID",
+  dadID    = "dadID",
+  verbose  = TRUE
+)
+cat("Pedigree is acyclic:", net$is_acyclic, "\n")
+```
+
+With the pedigree confirmed acyclic, we assign family group IDs using
+`ped2fam()`. Family groups are the connected components of the pedigree
+graph — sets of individuals linked by at least one parent-offspring
+relationship.
+
+```{r fam-ids}
+gp <- ped2fam(gp, personID = "ID", famID = "famID")
+cat("Number of family groups:", n_distinct(gp$famID), "\n")
+```
+
+## Who is in the data?
+
+```{r pedigree-overview}
+cat("Individuals:        ", nrow(gp), "\n")
+cat("Founders:           ",
+    sum(is.na(gp$dadID) & is.na(gp$momID)), "\n")
+cat("With both parents:  ",
+    sum(!is.na(gp$dadID) & !is.na(gp$momID)), "\n")
+cat("Generations:        ", paste(sort(unique(gp$gener)), collapse = ", "), "\n")
+```
+
+Most individuals have both parents recorded — this is a controlled breeding
+study, not a wild population, so pedigree completeness is high.
+
+## Pedigree depth across generations
+
+The breeding program ran for four generations. Each generation was larger
+than the last as the population expanded.
+
+```{r generation-sex, fig.height = 3.5}
+gp |>
+  filter(!is.na(gener), !is.na(sexo)) |>
+  count(gener, sexo) |>
+  ggplot(aes(x = factor(gener), y = n, fill = sexo)) +
+  geom_col(position = "dodge") +
+  scale_fill_brewer(palette = "Set1",
+                    labels = c("H" = "Female", "M" = "Male")) +
+  labs(title = "Number of individuals per generation",
+       x = "Generation", y = "Count", fill = "Sex") +
+  theme_minimal()
+```
+
+## Litter structure
+
+Guinea pigs are polytocous — they give birth to litters. Litter size at
+birth (`tc_nac`) and at weaning (`tc_destete`) reflect both reproductive
+output and early-life survival.
+
+```{r litter-size, fig.height = 3.5}
+guinea_pigs |>
+  filter(!is.na(tc_nac)) |>
+  count(tc_nac) |>
+  ggplot(aes(x = factor(tc_nac), y = n)) +
+  geom_col(fill = "#377EB8", alpha = 0.85) +
+  labs(title = "Litter size at birth",
+       x = "Litter size (tc_nac)", y = "Count") +
+  theme_minimal()
+```
+
+```{r litter-survival}
+# Average survival from birth to weaning
+guinea_pigs |>
+  filter(!is.na(tc_nac), !is.na(tc_destete)) |>
+  mutate(survived = tc_destete / tc_nac) |>
+  summarise(
+    mean_born    = round(mean(tc_nac), 2),
+    mean_weaned  = round(mean(tc_destete), 2),
+    mean_surv    = round(mean(survived), 3)
+  )
+```
+
+On average, most offspring that are born survive to weaning — consistent
+with the controlled conditions of a breeding program.
+
+## Family group sizes
+
+```{r fam-sizes, fig.height = 3.5}
+gp |>
+  count(famID) |>
+  ggplot(aes(x = n)) +
+  geom_histogram(binwidth = 5, fill = "#377EB8", alpha = 0.85) +
+  labs(title = "Distribution of family group sizes",
+       x = "Individuals per family", y = "Number of families") +
+  theme_minimal()
+```
+
+## A single family pedigree
+
+```{r single-family, eval = requireNamespace("ggpedigree", quietly = TRUE), fig.width = 8, fig.height = 5}
+library(ggpedigree)
+
+# Pick a mid-sized, well-connected family
+fam_summary <- gp |>
+  filter(!is.na(momID) | !is.na(dadID)) |>
+  count(famID) |>
+  filter(n >= 15, n <= 40) |>
+  arrange(desc(n))
+
+focal_fam <- gp |> filter(famID == fam_summary$famID[1])
+
+ggPedigree(focal_fam,
+  personID = "ID",
+  momID    = "momID",
+  dadID    = "dadID",
+  config   = list(
+    add_phantoms = TRUE,
+    code_male    = "M",
+    code_female  = "H"
+  )
+)
 ```
 
 ---
 
-## Joining pedigree and phenotype (`ped_pheno`)
+# Growth trajectories
 
-`ped_pheno` is a full join of `ped` and `pheno`, retaining all individuals
-regardless of whether they appear in both sources.
+## Overall growth
 
-```{r ped-pheno-overlap}
-in_both  <- sum(!is.na(ped_pheno$p0))
-ped_only <- sum(is.na(ped_pheno$p0) & is.na(ped_pheno$sexo))
-cat("Individuals with phenotype data:  ", in_both, "\n")
-cat("Individuals in pedigree only:      ", nrow(ped_pheno) - in_both, "\n")
+Body weight was recorded at six time points across the first 90 days of
+life. Weights increase rapidly in the first 30 days, then plateau.
+
+```{r growth-plot}
+growth_long <- guinea_pigs |>
+  filter(!is.na(p0)) |>
+  select(ID, sexo, p0, p15, p30, p45, p60, p90) |>
+  pivot_longer(
+    cols      = starts_with("p"),
+    names_to  = "day",
+    values_to = "weight"
+  ) |>
+  mutate(day = as.numeric(stringr::str_remove(day, "p")))
+
+set.seed(42)
+sample_ids <- sample(unique(growth_long$ID), 1000)
+
+ggplot(
+  growth_long |> filter(ID %in% sample_ids),
+  aes(x = day, y = weight, group = ID)
+) +
+  geom_line(alpha = 0.1) +
+  geom_jitter(alpha = 0.05, width = 1, height = 0) +
+  geom_smooth(
+    method = "loess", se = TRUE,
+    aes(group = sexo, color = sexo)
+  ) +
+  scale_x_continuous(breaks = c(0, 15, 30, 45, 60, 90)) +
+  scale_color_brewer(
+    palette  = "Set1",
+    labels   = c("H" = "Female", "M" = "Male"),
+    na.value = "grey50"
+  ) +
+  labs(
+    title = "Growth trajectories over the first 90 days",
+    x     = "Day",
+    y     = "Weight (g)",
+    color = "Sex"
+  ) +
+  theme_minimal()
+```
+
+Male and female growth curves diverge after day 30, with males reaching
+higher weights by day 90. This sex difference is a consistent feature of
+guinea pig growth and should be included as a covariate in any analysis.
+
+## Weight at day 90 by sex
+
+```{r p90-summary}
+guinea_pigs |>
+  filter(!is.na(p90), !is.na(sexo)) |>
+  group_by(Sex = sexo) |>
+  summarise(
+    n    = n(),
+    mean = round(mean(p90), 1),
+    sd   = round(sd(p90), 1),
+    min  = min(p90),
+    max  = max(p90)
+  )
 ```
 
 ---
 
-## Citation
+# Seasonal variation
 
-If you use these data, please cite the original source:
+The dataset records whether each animal was born in winter (*invierno*) or
+summer (*verano*). Season of birth may influence early resource availability,
+dam condition, and growth.
 
-> Figshare dataset. <https://doi.org/10.6084/m9.figshare.31513204.v2>
+## Birth weight by season
+
+```{r season-birthweight, fig.height = 3.5}
+guinea_pigs |>
+  filter(!is.na(p0), !is.na(clima)) |>
+  ggplot(aes(x = p0, fill = clima)) +
+  geom_histogram(binwidth = 15, alpha = 0.7, position = "identity") +
+  scale_fill_manual(
+    values = c("invierno" = "#377EB8", "verano" = "#E41A1C"),
+    labels = c("invierno" = "Winter", "verano" = "Summer")
+  ) +
+  labs(title = "Birth weight by season",
+       x = "Birth weight (g)", y = "Count", fill = "Season") +
+  theme_minimal()
+```
+
+```{r season-summary}
+guinea_pigs |>
+  filter(!is.na(p0), !is.na(clima)) |>
+  group_by(Season = clima) |>
+  summarise(
+    n             = n(),
+    mean_birthwt  = round(mean(p0, na.rm = TRUE), 1),
+    mean_p90      = round(mean(p90, na.rm = TRUE), 1)
+  )
+```
+
+## Season effect on growth trajectories
+
+Does the season of birth shape how animals grow across the full 90 days,
+or is the effect limited to birth weight?
+
+```{r season-growth}
+growth_season <- guinea_pigs |>
+  filter(!is.na(p0), !is.na(clima)) |>
+  select(ID, clima, p0, p15, p30, p45, p60, p90) |>
+  pivot_longer(
+    cols      = starts_with("p"),
+    names_to  = "day",
+    values_to = "weight"
+  ) |>
+  mutate(day = as.numeric(stringr::str_remove(day, "p")))
+
+set.seed(42)
+sample_ids2 <- sample(unique(growth_season$ID), 1000)
+
+ggplot(
+  growth_season |> filter(ID %in% sample_ids2),
+  aes(x = day, y = weight, group = ID)
+) +
+  geom_line(alpha = 0.08) +
+  geom_smooth(
+    method = "loess", se = TRUE,
+    aes(group = clima, color = clima)
+  ) +
+  scale_x_continuous(breaks = c(0, 15, 30, 45, 60, 90)) +
+  scale_color_manual(
+    values = c("invierno" = "#377EB8", "verano" = "#E41A1C"),
+    labels = c("invierno" = "Winter", "verano" = "Summer")
+  ) +
+  labs(
+    title = "Growth trajectories by season of birth",
+    x     = "Day",
+    y     = "Weight (g)",
+    color = "Season"
+  ) +
+  theme_minimal()
+```
+
+---
+
+# Other characteristics
+
+## Coat color
+
+```{r coat-color, fig.height = 3}
+guinea_pigs |>
+  filter(!is.na(color), color != "", color != "na") |>
+  count(color, sort = TRUE) |>
+  ggplot(aes(x = reorder(color, n), y = n)) +
+  geom_col(fill = "#4DAF4A", alpha = 0.85) +
+  coord_flip() +
+  labs(title = "Coat color distribution",
+       x = NULL, y = "Count") +
+  theme_minimal()
+```
+
+## Missing data
+
+Not all individuals were weighed at every time point — attrition increases
+at later ages.
+
+```{r missingness}
+weight_cols <- c("p0", "p15", "p30", "p45", "p60", "p90")
+sapply(guinea_pigs[weight_cols], function(x)
+  paste0(sum(!is.na(x)), " (", round(mean(!is.na(x)) * 100, 1), "%)")) |>
+  setNames(paste0("Day ", c(0, 15, 30, 45, 60, 90)))
+```
+
+---
+
+# Source
+
+Figshare: <https://doi.org/10.6084/m9.figshare.31513204.v2>
