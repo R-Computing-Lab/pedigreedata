@@ -10,10 +10,10 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment  = "#>",
-  message  = FALSE,
-  warning  = FALSE,
-  fig.width  = 7,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE,
+  fig.width = 7,
   fig.height = 4.5
 )
 ```
@@ -55,8 +55,10 @@ red_squirrels |>
   count(byear) |>
   ggplot(aes(x = byear, y = n)) +
   geom_col(fill = "#E41A1C", alpha = 0.8) +
-  labs(title = "Number of squirrels born per year",
-       x = "Birth year", y = "Count") +
+  labs(
+    title = "Number of squirrels born per year",
+    x = "Birth year", y = "Count"
+  ) +
   theme_minimal()
 ```
 
@@ -76,10 +78,14 @@ red_squirrels |>
   filter(lifespan >= 0) |>
   ggplot(aes(x = lifespan, fill = sex)) +
   geom_histogram(binwidth = 1, alpha = 0.7, position = "identity") +
-  scale_fill_brewer(palette = "Set1",
-                    labels = c("F" = "Female", "M" = "Male")) +
-  labs(title = "Lifespan distribution by sex",
-       x = "Lifespan (years)", y = "Count", fill = "Sex") +
+  scale_fill_brewer(
+    palette = "Set1",
+    labels = c("F" = "Female", "M" = "Male")
+  ) +
+  labs(
+    title = "Lifespan distribution by sex",
+    x = "Lifespan (years)", y = "Count", fill = "Sex"
+  ) +
   theme_minimal()
 ```
 
@@ -104,10 +110,14 @@ red_squirrels |>
 
 ```{r pedigree-overview}
 cat("Total individuals:  ", nrow(red_squirrels), "\n")
-cat("Founders:           ",
-    sum(is.na(red_squirrels$momID) & is.na(red_squirrels$dadID)), "\n")
-cat("With both parents:  ",
-    sum(!is.na(red_squirrels$momID) & !is.na(red_squirrels$dadID)), "\n")
+cat(
+  "Founders:           ",
+  sum(is.na(red_squirrels$momID) & is.na(red_squirrels$dadID)), "\n"
+)
+cat(
+  "With both parents:  ",
+  sum(!is.na(red_squirrels$momID) & !is.na(red_squirrels$dadID)), "\n"
+)
 cat("Number of families: ", n_distinct(red_squirrels$famID), "\n")
 ```
 
@@ -122,8 +132,10 @@ red_squirrels |>
   count(famID) |>
   ggplot(aes(x = n)) +
   geom_histogram(binwidth = 2, fill = "#377EB8", alpha = 0.8) +
-  labs(title = "Distribution of family group sizes",
-       x = "Individuals per family", y = "Number of families") +
+  labs(
+    title = "Distribution of family group sizes",
+    x = "Individuals per family", y = "Number of families"
+  ) +
   theme_minimal()
 ```
 
@@ -174,9 +186,9 @@ focal_fam <- sq |> filter(famID == fam_summary$famID[1])
 
 ggPedigree(focal_fam,
   personID = "personID",
-  momID    = "momID",
-  dadID    = "dadID",
-  config   = list(
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
     add_phantoms = TRUE,
     code_male    = "M",
     code_female  = "F"
@@ -199,10 +211,14 @@ red_squirrels |>
   filter(!is.na(lrs), !is.na(sex)) |>
   ggplot(aes(x = lrs, fill = sex)) +
   geom_histogram(binwidth = 1, alpha = 0.7, position = "identity") +
-  scale_fill_brewer(palette = "Set1",
-                    labels = c("F" = "Female", "M" = "Male")) +
-  labs(title = "Lifetime reproductive success (LRS) by sex",
-       x = "LRS", y = "Count", fill = "Sex") +
+  scale_fill_brewer(
+    palette = "Set1",
+    labels = c("F" = "Female", "M" = "Male")
+  ) +
+  labs(
+    title = "Lifetime reproductive success (LRS) by sex",
+    x = "LRS", y = "Count", fill = "Sex"
+  ) +
   theme_minimal()
 ```
 
@@ -234,10 +250,14 @@ red_squirrels |>
   filter(!is.na(ars_mean), !is.na(sex)) |>
   ggplot(aes(x = ars_mean, fill = sex)) +
   geom_histogram(binwidth = 0.25, alpha = 0.7, position = "identity") +
-  scale_fill_brewer(palette = "Set1",
-                    labels = c("F" = "Female", "M" = "Male")) +
-  labs(title = "Mean annual reproductive success (ARS) by sex",
-       x = "Mean ARS", y = "Count", fill = "Sex") +
+  scale_fill_brewer(
+    palette = "Set1",
+    labels = c("F" = "Female", "M" = "Male")
+  ) +
+  labs(
+    title = "Mean annual reproductive success (ARS) by sex",
+    x = "Mean ARS", y = "Count", fill = "Sex"
+  ) +
   theme_minimal()
 ```
 
@@ -256,8 +276,10 @@ red_squirrels |>
   geom_point(aes(size = n), alpha = 0.6, color = "#E41A1C") +
   geom_smooth(method = "loess", se = TRUE, color = "black") +
   scale_size_continuous(range = c(1, 5)) +
-  labs(title = "Mean LRS by birth cohort (cohorts with n ≥ 10)",
-       x = "Birth year", y = "Mean LRS", size = "Cohort size") +
+  labs(
+    title = "Mean LRS by birth cohort (cohorts with n ≥ 10)",
+    x = "Birth year", y = "Mean LRS", size = "Cohort size"
+  ) +
   theme_minimal()
 ```
 
@@ -274,10 +296,14 @@ parent IDs, and not all individuals have fitness data.
 ```{r missing}
 data.frame(
   Variable = c("momID", "dadID", "byear", "dyear", "lrs", "ars_mean"),
-  Missing  = sapply(
+  Missing = sapply(
     red_squirrels[c("momID", "dadID", "byear", "dyear", "lrs", "ars_mean")],
-    function(x) paste0(sum(is.na(x)), " (",
-                       round(mean(is.na(x)) * 100, 1), "%)")
+    function(x) {
+      paste0(
+        sum(is.na(x)), " (",
+        round(mean(is.na(x)) * 100, 1), "%)"
+      )
+    }
   )
 )
 ```

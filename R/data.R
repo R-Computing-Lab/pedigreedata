@@ -132,12 +132,12 @@
 #'   ggpedigree::ggPedigree(war_of_the_roses,
 #'     personID = "id", momID = "momID", dadID = "dadID", famID = "famID",
 #'     config = list(
-#'       code_male    = "M",
-#'       code_female  = "F",
-#'       code_na      = "U",
+#'       code_male = "M",
+#'       code_female = "F",
+#'       code_na = "U",
 #'       label_column = "name",
 #'       label_method = "ggrepel",
-#'       label_include   = TRUE,
+#'       label_include = TRUE,
 #'       label_text_size = 2
 #'     )
 #'   )
