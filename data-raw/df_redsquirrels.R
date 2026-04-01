@@ -177,6 +177,9 @@ red_squirrels_repaired <- checkSex(red_squirrels,
     repair            = TRUE,
     parentswithoutrow = FALSE,
     repairsex         = FALSE
+  ) %>%
+  rename (
+    personID = ID
   )
 
 checkIDs(red_squirrels_repaired)
