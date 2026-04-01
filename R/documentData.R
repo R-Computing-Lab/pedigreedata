@@ -141,7 +141,6 @@
 NULL
 
 
-
 #' Wars of the Roses Pedigree Data
 #'
 #' A pedigree dataset representing the familial relationships among key figures

@@ -86,13 +86,19 @@ lrs_f <- redsquirrels$lrs[redsquirrels$sex == "F" & !is.na(redsquirrels$lrs)]
 lrs_m <- redsquirrels$lrs[redsquirrels$sex == "M" & !is.na(redsquirrels$lrs)]
 
 breaks <- seq(0, max(redsquirrels$lrs, na.rm = TRUE) + 2, by = 2)
-hist(lrs_f, breaks = breaks, col = adjustcolor("#E41A1C", 0.5),
-     xlab = "Lifetime Reproductive Success", main = "LRS by sex",
-     ylim = c(0, max(hist(lrs_f, breaks = breaks, plot = FALSE)$counts,
-                     hist(lrs_m, breaks = breaks, plot = FALSE)$counts) * 1.1))
+hist(lrs_f,
+  breaks = breaks, col = adjustcolor("#E41A1C", 0.5),
+  xlab = "Lifetime Reproductive Success", main = "LRS by sex",
+  ylim = c(0, max(
+    hist(lrs_f, breaks = breaks, plot = FALSE)$counts,
+    hist(lrs_m, breaks = breaks, plot = FALSE)$counts
+  ) * 1.1)
+)
 hist(lrs_m, breaks = breaks, col = adjustcolor("#377EB8", 0.5), add = TRUE)
-legend("topright", legend = c("Female", "Male"),
-       fill = adjustcolor(c("#E41A1C", "#377EB8"), 0.5), bty = "n")
+legend("topright",
+  legend = c("Female", "Male"),
+  fill = adjustcolor(c("#E41A1C", "#377EB8"), 0.5), bty = "n"
+)
 ```
 
 ---
