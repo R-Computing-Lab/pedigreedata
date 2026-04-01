@@ -1,0 +1,93 @@
+---
+title: "Wars of the Roses Pedigree"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Wars of the Roses Pedigree}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r load}
+library(pedigreedata)
+```
+
+## Overview
+
+The `warsofroses` dataset is a pedigree of the English royal families involved
+in the Wars of the Roses (1455–1487). The pedigree is rooted at
+**Edward III** (reigned 1327–1377), whose descendants formed the rival houses
+of Lancaster and York. It was processed using
+[BGmisc](https://github.com/R-Computing-Lab/BGmisc) to assign family IDs and
+check pedigree integrity.
+
+```{r dim}
+cat("Individuals:", nrow(warsofroses), "\n")
+cat("Columns:    ", ncol(warsofroses), "\n")
+```
+
+## Structure
+
+```{r head}
+head(warsofroses[, c("id", "name", "sex", "momID", "dadID", "famID")])
+```
+
+```{r str}
+str(warsofroses)
+```
+
+## Sex and founder status
+
+```{r sex}
+table(Sex = warsofroses$sex, useNA = "ifany")
+```
+
+```{r founders}
+founders <- warsofroses[is.na(warsofroses$momID) & is.na(warsofroses$dadID), ]
+cat("Founders (no parents recorded):", nrow(founders), "\n")
+founders[, c("id", "name", "sex")]
+```
+
+## Twins
+
+```{r twins}
+twins <- warsofroses[!is.na(warsofroses$twinID), ]
+if (nrow(twins) > 0) {
+  twins[, c("id", "name", "sex", "twinID", "zygosity")]
+} else {
+  cat("No twins recorded in this dataset.\n")
+}
+```
+
+## Family structure
+
+```{r families}
+fam_sizes <- table(warsofroses$famID)
+cat("Number of family groups:", length(fam_sizes), "\n")
+cat("Family sizes:\n")
+print(fam_sizes)
+```
+
+## Wikipedia links
+
+Each individual has a Wikipedia URL where available, making this dataset
+useful for teaching about pedigree structure and historical genealogy.
+
+```{r urls}
+# Individuals with Wikipedia entries
+has_url <- warsofroses[!is.na(warsofroses$url) & warsofroses$url != "", ]
+cat(nrow(has_url), "of", nrow(warsofroses), "individuals have Wikipedia URLs\n")
+head(has_url[, c("name", "url")], 10)
+```
+
+## Citation
+
+This dataset was compiled from public genealogical records. Wikipedia URLs
+are provided for reference. If using in published work, please cite the
+`pedigreedata` package.

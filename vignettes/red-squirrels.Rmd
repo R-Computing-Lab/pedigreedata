@@ -1,0 +1,129 @@
+---
+title: "Kluane Red Squirrel Project Data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Kluane Red Squirrel Project Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r load}
+library(pedigreedata)
+```
+
+## Overview
+
+The `redsquirrels` and `redsquirrels_full` datasets contain pedigree and
+fitness data from the **Kluane Red Squirrel Project**, a long-term field study
+of North American red squirrels (*Tamiasciurus hudsonicus*) in Yukon, Canada,
+running continuously since 1987.
+
+Two versions of the dataset are provided:
+
+| Dataset | Description | Rows |
+|---------|-------------|------|
+| `redsquirrels` | Families with at least one recorded father; core fitness columns | `r nrow(redsquirrels)` |
+| `redsquirrels_full` | All individuals; full ARS summary statistics | `r nrow(redsquirrels_full)` |
+
+**ARS** = Annual Reproductive Success (offspring recruited per year).
+**LRS** = Lifetime Reproductive Success (total offspring recruited).
+
+---
+
+## Core dataset (`redsquirrels`)
+
+```{r head}
+head(redsquirrels)
+```
+
+```{r str}
+str(redsquirrels)
+```
+
+### Sex distribution
+
+```{r sex}
+table(Sex = redsquirrels$sex, useNA = "ifany")
+```
+
+### Founders and pedigree depth
+
+```{r founders}
+founders <- redsquirrels[is.na(redsquirrels$momID) & is.na(redsquirrels$dadID), ]
+cat("Total individuals: ", nrow(redsquirrels), "\n")
+cat("Founders:          ", nrow(founders), "\n")
+cat("Non-founders:      ", nrow(redsquirrels) - nrow(founders), "\n")
+```
+
+### Birth and death years
+
+```{r years}
+cat("Birth years: ", range(redsquirrels$byear, na.rm = TRUE), "\n")
+cat("Death years: ", range(redsquirrels$dyear, na.rm = TRUE), "\n")
+cat("Missing byear:", sum(is.na(redsquirrels$byear)), "\n")
+cat("Missing dyear:", sum(is.na(redsquirrels$dyear)), "\n")
+```
+
+### Fitness measures
+
+```{r fitness}
+cat("--- Lifetime Reproductive Success (LRS) ---\n")
+summary(redsquirrels$lrs)
+cat("\n--- Mean Annual Reproductive Success (ARS) ---\n")
+summary(redsquirrels$ars_mean)
+```
+
+```{r fitness-plot, fig.width = 6, fig.height = 4}
+# LRS distribution by sex
+lrs_f <- redsquirrels$lrs[redsquirrels$sex == "F" & !is.na(redsquirrels$lrs)]
+lrs_m <- redsquirrels$lrs[redsquirrels$sex == "M" & !is.na(redsquirrels$lrs)]
+
+breaks <- seq(0, max(redsquirrels$lrs, na.rm = TRUE) + 2, by = 2)
+hist(lrs_f, breaks = breaks, col = adjustcolor("#E41A1C", 0.5),
+     xlab = "Lifetime Reproductive Success", main = "LRS by sex",
+     ylim = c(0, max(hist(lrs_f, breaks = breaks, plot = FALSE)$counts,
+                     hist(lrs_m, breaks = breaks, plot = FALSE)$counts) * 1.1))
+hist(lrs_m, breaks = breaks, col = adjustcolor("#377EB8", 0.5), add = TRUE)
+legend("topright", legend = c("Female", "Male"),
+       fill = adjustcolor(c("#E41A1C", "#377EB8"), 0.5), bty = "n")
+```
+
+---
+
+## Full dataset (`redsquirrels_full`)
+
+`redsquirrels_full` retains all individuals (including those in matrilineal-only
+families) and adds year-by-year ARS summary statistics.
+
+```{r full-head}
+head(redsquirrels_full)
+```
+
+```{r full-extra}
+cat("Additional columns in redsquirrels_full:\n")
+setdiff(names(redsquirrels_full), names(redsquirrels))
+```
+
+```{r full-ars}
+cat("ARS observation counts (ars_n):\n")
+summary(redsquirrels_full$ars_n)
+cat("\nObservation span (years):\n")
+span <- redsquirrels_full$year_last - redsquirrels_full$year_first
+summary(span[!is.na(span)])
+```
+
+---
+
+## Citation
+
+If you use these data, please cite the original Dryad deposit:
+
+> McFarlane, S.E., et al. (2015). Kluane Red Squirrel Project pedigree and
+> fitness data. Dryad. <https://doi.org/10.5061/dryad.n5q05>

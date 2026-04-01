@@ -25,22 +25,21 @@ pheno <- read_delim("data-raw/FenotiposPesos90.csv",
     ID = id,
     dadID = sire_id,
     momID = dam_id
-  )
-
-# check the distribution of p0
-pheno %>%
-  pull(p0) %>%
-  table()
-
-
-pheno <- pheno %>%
+  ) %>%
   mutate(
+    # Standardize color: lowercase and strip whitespace
+    color = tolower(trimws(color)),
+    # Recode "ABORTO" births as NA for birth weight
     p0 = as.double(case_when(
       p0 == "ABORTO" ~ NA_character_,
       TRUE ~ p0
     ))
   )
 
+# check the distribution of p0
+pheno %>%
+  pull(p0) %>%
+  table()
 
 
 ped_pheno <- ped %>%
@@ -72,10 +71,8 @@ ped_growth <- ped_pheno %>%
 
 # growth graph over time p0, p15, p30, p45, p60, p90, where 0 is day 0, 15 is day 15, etc.
 
-
-
 library(ggplot2)
-if (T) {
+if (FALSE) {
   pl <- ggplot(
     ped_growth %>% filter(ID %in% sample(unique(ped_growth$ID), 1000)),
     aes(x = day, y = weight, group = ID)
@@ -89,12 +86,12 @@ if (T) {
       y = "Weight"
     ) +
     theme_minimal() +
-    # nicer colors
     scale_color_discrete(palette = "Set1")
-  ##
   pl
 }
-# data processing
 
-write.csv(ped_pheno, "data-raw/ped_pheno.csv", row.names = FALSE)
-# usethis::use_data(ped_pheno, overwrite = TRUE, compress = "xz")
+# Save datasets to data/
+usethis::use_data(ped, overwrite = TRUE, compress = "xz")
+usethis::use_data(pheno, overwrite = TRUE, compress = "xz")
+usethis::use_data(ped_pheno, overwrite = TRUE, compress = "xz")
+usethis::use_data(ped_growth, overwrite = TRUE, compress = "xz")

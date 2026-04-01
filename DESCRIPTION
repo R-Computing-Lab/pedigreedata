@@ -1,16 +1,33 @@
 Package: pedigreedata
-Type: Package
-Title: What the Package Does (Title Case)
+Title: Pedigree and Phenotype Datasets for Quantitative Genetics
 Version: 0.1.0
+Date/Publication: 2026
 Authors@R: c(
-    person(
-      "Jane", "Doe",
-      email = "jane@example.com",
-      role = c("aut", "cre")
-    )
+    person("S. Mason", "Garrison", email = "garrissm@wfu.edu", role = c("aut", "cre", "cph"),
+           comment = c(ORCID = "0000-0002-4804-6003"))
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
-License: What license is it under?
+Description: Provides curated pedigree and phenotypic datasets for use in
+    quantitative genetics and behavior genetics research. Datasets include
+    multi-generation pedigree structures and repeated body weight measurements,
+    suitable for demonstrating animal models, heritability estimation, and
+    pedigree visualization with packages such as 'BGmisc'
+    [Garrison et al. (2024) <doi:10.21105/joss.06203>] and 'ggpedigree'.
+License: GPL (>= 3)
+URL: https://github.com/R-Computing-Lab/pedigreedata/,
+     https://r-computing-lab.github.io/pedigreedata/
+BugReports: https://github.com/R-Computing-Lab/pedigreedata/issues
+Depends:
+    R (>= 4.1.0)
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    tibble
+VignetteBuilder:
+    knitr
+Config/testthat/edition: 3
 Encoding: UTF-8
+RoxygenNote: 7.3.3
+Language: en-US
 LazyData: true
+Config/Needs/website: rmarkdown
