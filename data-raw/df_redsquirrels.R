@@ -165,6 +165,34 @@ ds_grouped <- ds %>%
 red_squirrels <- ds_grouped %>%
   arrange(personID)
 
-write_csv(red_squirrels, here("data-raw", "red_squirrels.csv"), na = "")
+# checks
+red_squirrels_repaired <- checkSex(red_squirrels,
+  code_male   = "M",
+  code_female = "F",
+  verbose     = TRUE,
+  repair      = TRUE
+) %>%
+  checkParentIDs(
+    addphantoms       = TRUE,
+    repair            = TRUE,
+    parentswithoutrow = FALSE,
+    repairsex         = FALSE
+  )
 
-usethis::use_data(red_squirrels, overwrite = TRUE, compress = "xz")
+checkIDs(red_squirrels_repaired, personID = "personID")
+
+checkis_acyclic <- checkPedigreeNetwork(red_squirrels_repaired,
+  personID = "personID",
+  momID    = "momID",
+  dadID    = "dadID",
+  verbose  = TRUE
+)
+checkis_acyclic
+
+if (checkis_acyclic$is_acyclic) {
+  message("The pedigree is acyclic.")
+  write_csv(red_squirrels, here("data-raw", "red_squirrels.csv"), na = "")
+  usethis::use_data(red_squirrels, overwrite = TRUE, compress = "xz")
+} else {
+  message("The pedigree contains cyclic relationships.")
+}
