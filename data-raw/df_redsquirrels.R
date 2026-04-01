@@ -179,7 +179,7 @@ red_squirrels_repaired <- checkSex(red_squirrels,
     repairsex         = FALSE
   )
 
-checkIDs(red_squirrels_repaired, personID = "personID")
+checkIDs(red_squirrels_repaired)
 
 checkis_acyclic <- checkPedigreeNetwork(red_squirrels_repaired,
   personID = "personID",
