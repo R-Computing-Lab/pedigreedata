@@ -42,12 +42,18 @@ head(war_of_the_roses[, c("id", "name", "sex", "momID", "dadID", "famID")])
 
 ```{r cast}
 cat("Total individuals:  ", nrow(war_of_the_roses), "\n")
-cat("Named individuals:  ",
-    sum(!is.na(war_of_the_roses$name) & war_of_the_roses$name != ""), "\n")
-cat("Founders (no parents recorded):  ",
-    sum(is.na(war_of_the_roses$momID) & is.na(war_of_the_roses$dadID)), "\n")
-cat("With Wikipedia URLs: ",
-    sum(!is.na(war_of_the_roses$url) & war_of_the_roses$url != ""), "\n")
+cat(
+  "Named individuals:  ",
+  sum(!is.na(war_of_the_roses$name) & war_of_the_roses$name != ""), "\n"
+)
+cat(
+  "Founders (no parents recorded):  ",
+  sum(is.na(war_of_the_roses$momID) & is.na(war_of_the_roses$dadID)), "\n"
+)
+cat(
+  "With Wikipedia URLs: ",
+  sum(!is.na(war_of_the_roses$url) & war_of_the_roses$url != ""), "\n"
+)
 ```
 
 ## Founders — the starting generation
@@ -152,8 +158,10 @@ Edward IV — he united the two roses.
 
 ```{r henry-vii}
 war_of_the_roses |>
-  filter(name %in% c("Henry VII", "Henry Tudor",
-                     "Elizabeth of York", "Margaret Beaufort")) |>
+  filter(name %in% c(
+    "Henry VII", "Henry Tudor",
+    "Elizabeth of York", "Margaret Beaufort"
+  )) |>
   select(id, name, sex, momID, dadID)
 ```
 
@@ -167,17 +175,20 @@ library(BGmisc)
 
 # Validate pedigree for plotting
 wor_plot <- checkSex(war_of_the_roses,
-  code_male = "M", code_female = "F", verbose = FALSE, repair = TRUE) |>
-  checkParentIDs(addphantoms = TRUE, repair = TRUE,
-                 parentswithoutrow = FALSE, repairsex = FALSE)
+  code_male = "M", code_female = "F", verbose = FALSE, repair = TRUE
+) |>
+  checkParentIDs(
+    addphantoms = TRUE, repair = TRUE,
+    parentswithoutrow = FALSE, repairsex = FALSE
+  )
 
 # Focal fill from Edward III (id = 1) shows degree of relatedness to the root
 ggPedigree(wor_plot,
   personID = "id",
-  momID    = "momID",
-  dadID    = "dadID",
-  famID    = "famID",
-  config   = list(
+  momID = "momID",
+  dadID = "dadID",
+  famID = "famID",
+  config = list(
     code_male               = "M",
     code_female             = "F",
     code_na                 = "U",

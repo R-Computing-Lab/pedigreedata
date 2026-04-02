@@ -102,8 +102,10 @@ if (FALSE) {
     geom_jitter(alpha = 0.05, width = 1, height = 0) +
     geom_smooth(method = "loess", se = TRUE, aes(group = sexo, color = sexo)) +
     scale_x_continuous(breaks = c(0, 15, 30, 45, 60, 90)) +
-    scale_color_brewer(palette = "Set1",
-                       labels = c("H" = "Female", "M" = "Male")) +
+    scale_color_brewer(
+      palette = "Set1",
+      labels = c("H" = "Female", "M" = "Male")
+    ) +
     labs(
       title = "Growth trajectories of individuals over time",
       x     = "Day",

@@ -10,10 +10,10 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment  = "#>",
-  message  = FALSE,
-  warning  = FALSE,
-  fig.width  = 7,
+  comment = "#>",
+  message = FALSE,
+  warning = FALSE,
+  fig.width = 7,
   fig.height = 4.5
 )
 ```
@@ -92,12 +92,14 @@ cat("Number of family groups:", n_distinct(gp$famID), "\n")
 ## Who is in the data?
 
 ```{r pedigree-overview}
+
 cat("Individuals:        ", nrow(guinea_pigs), "\n")
 cat("Founders:           ",
     sum(is.na(guinea_pigs$dadID) & is.na(guinea_pigs$momID)), "\n")
 cat("With both parents:  ",
     sum(!is.na(guinea_pigs$dadID) & !is.na(guinea_pigs$momID)), "\n")
 cat("Generations:        ", paste(sort(unique(guinea_pigs$gener)), collapse = ", "), "\n")
+
 ```
 
 Most individuals have both parents recorded — this is a controlled breeding
@@ -114,10 +116,14 @@ guinea_pigs |>
   count(gener, sexo) |>
   ggplot(aes(x = factor(gener), y = n, fill = sexo)) +
   geom_col(position = "dodge") +
-  scale_fill_brewer(palette = "Set1",
-                    labels = c("H" = "Female", "M" = "Male")) +
-  labs(title = "Number of individuals per generation",
-       x = "Generation", y = "Count", fill = "Sex") +
+  scale_fill_brewer(
+    palette = "Set1",
+    labels = c("H" = "Female", "M" = "Male")
+  ) +
+  labs(
+    title = "Number of individuals per generation",
+    x = "Generation", y = "Count", fill = "Sex"
+  ) +
   theme_minimal()
 ```
 
@@ -133,8 +139,10 @@ guinea_pigs |>
   count(tc_nac) |>
   ggplot(aes(x = factor(tc_nac), y = n)) +
   geom_col(fill = "#377EB8", alpha = 0.85) +
-  labs(title = "Litter size at birth",
-       x = "Litter size (tc_nac)", y = "Count") +
+  labs(
+    title = "Litter size at birth",
+    x = "Litter size (tc_nac)", y = "Count"
+  ) +
   theme_minimal()
 ```
 
@@ -159,8 +167,10 @@ guinea_pigs |>
   count(famID) |>
   ggplot(aes(x = n)) +
   geom_histogram(binwidth = 5, fill = "#377EB8", alpha = 0.85) +
-  labs(title = "Distribution of family group sizes",
-       x = "Individuals per family", y = "Number of families") +
+  labs(
+    title = "Distribution of family group sizes",
+    x = "Individuals per family", y = "Number of families"
+  ) +
   theme_minimal()
 ```
 
@@ -179,9 +189,9 @@ focal_fam <- guinea_pigs |> filter(famID == fam_summary$famID[1])
 
 ggPedigree(focal_fam,
   personID = "ID",
-  momID    = "momID",
-  dadID    = "dadID",
-  config   = list(
+  momID = "momID",
+  dadID = "dadID",
+  config = list(
     add_phantoms = TRUE,
     code_male    = "M",
     code_female  = "H"
@@ -275,8 +285,10 @@ guinea_pigs |>
     values = c("invierno" = "#377EB8", "verano" = "#E41A1C"),
     labels = c("invierno" = "Winter", "verano" = "Summer")
   ) +
-  labs(title = "Birth weight by season",
-       x = "Birth weight (g)", y = "Count", fill = "Season") +
+  labs(
+    title = "Birth weight by season",
+    x = "Birth weight (g)", y = "Count", fill = "Season"
+  ) +
   theme_minimal()
 ```
 
@@ -346,8 +358,10 @@ guinea_pigs |>
   ggplot(aes(x = reorder(color, n), y = n)) +
   geom_col(fill = "#4DAF4A", alpha = 0.85) +
   coord_flip() +
-  labs(title = "Coat color distribution",
-       x = NULL, y = "Count") +
+  labs(
+    title = "Coat color distribution",
+    x = NULL, y = "Count"
+  ) +
   theme_minimal()
 ```
 
@@ -358,8 +372,9 @@ at later ages.
 
 ```{r missingness}
 weight_cols <- c("p0", "p15", "p30", "p45", "p60", "p90")
-sapply(guinea_pigs[weight_cols], function(x)
-  paste0(sum(!is.na(x)), " (", round(mean(!is.na(x)) * 100, 1), "%)")) |>
+sapply(guinea_pigs[weight_cols], function(x) {
+  paste0(sum(!is.na(x)), " (", round(mean(!is.na(x)) * 100, 1), "%)")
+}) |>
   setNames(paste0("Day ", c(0, 15, 30, 45, 60, 90)))
 ```
 
