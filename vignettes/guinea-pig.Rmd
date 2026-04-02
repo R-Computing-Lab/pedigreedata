@@ -92,14 +92,16 @@ cat("Number of family groups:", n_distinct(gp$famID), "\n")
 ## Who is in the data?
 
 ```{r pedigree-overview}
-
 cat("Individuals:        ", nrow(guinea_pigs), "\n")
-cat("Founders:           ",
-    sum(is.na(guinea_pigs$dadID) & is.na(guinea_pigs$momID)), "\n")
-cat("With both parents:  ",
-    sum(!is.na(guinea_pigs$dadID) & !is.na(guinea_pigs$momID)), "\n")
+cat(
+  "Founders:           ",
+  sum(is.na(guinea_pigs$dadID) & is.na(guinea_pigs$momID)), "\n"
+)
+cat(
+  "With both parents:  ",
+  sum(!is.na(guinea_pigs$dadID) & !is.na(guinea_pigs$momID)), "\n"
+)
 cat("Generations:        ", paste(sort(unique(guinea_pigs$gener)), collapse = ", "), "\n")
-
 ```
 
 Most individuals have both parents recorded — this is a controlled breeding
