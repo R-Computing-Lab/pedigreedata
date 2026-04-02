@@ -30,18 +30,16 @@ links, litter information, coat color, season of birth, and housing pen.
 
 ```{r load}
 library(pedigreedata)
-library(BGmisc)
 library(ggplot2)
 library(dplyr)
 library(tidyr)
-
+library(BGmisc)
 data(guinea_pigs)
 ```
 
 ---
 
 # The pedigree
-
 ## Validate the pedigree
 
 Before exploring the data, we validate the pedigree structure using
@@ -89,15 +87,17 @@ gp <- ped2fam(gp, personID = "ID", famID = "famID")
 cat("Number of family groups:", n_distinct(gp$famID), "\n")
 ```
 
+
+
 ## Who is in the data?
 
 ```{r pedigree-overview}
-cat("Individuals:        ", nrow(gp), "\n")
+cat("Individuals:        ", nrow(guinea_pigs), "\n")
 cat("Founders:           ",
-    sum(is.na(gp$dadID) & is.na(gp$momID)), "\n")
+    sum(is.na(guinea_pigs$dadID) & is.na(guinea_pigs$momID)), "\n")
 cat("With both parents:  ",
-    sum(!is.na(gp$dadID) & !is.na(gp$momID)), "\n")
-cat("Generations:        ", paste(sort(unique(gp$gener)), collapse = ", "), "\n")
+    sum(!is.na(guinea_pigs$dadID) & !is.na(guinea_pigs$momID)), "\n")
+cat("Generations:        ", paste(sort(unique(guinea_pigs$gener)), collapse = ", "), "\n")
 ```
 
 Most individuals have both parents recorded — this is a controlled breeding
@@ -109,7 +109,7 @@ The breeding program ran for four generations. Each generation was larger
 than the last as the population expanded.
 
 ```{r generation-sex, fig.height = 3.5}
-gp |>
+guinea_pigs |>
   filter(!is.na(gener), !is.na(sexo)) |>
   count(gener, sexo) |>
   ggplot(aes(x = factor(gener), y = n, fill = sexo)) +
@@ -139,14 +139,13 @@ guinea_pigs |>
 ```
 
 ```{r litter-survival}
-# Average survival from birth to weaning
 guinea_pigs |>
   filter(!is.na(tc_nac), !is.na(tc_destete)) |>
   mutate(survived = tc_destete / tc_nac) |>
   summarise(
-    mean_born    = round(mean(tc_nac), 2),
-    mean_weaned  = round(mean(tc_destete), 2),
-    mean_surv    = round(mean(survived), 3)
+    mean_born   = round(mean(tc_nac), 2),
+    mean_weaned = round(mean(tc_destete), 2),
+    mean_surv   = round(mean(survived), 3)
   )
 ```
 
@@ -156,7 +155,7 @@ with the controlled conditions of a breeding program.
 ## Family group sizes
 
 ```{r fam-sizes, fig.height = 3.5}
-gp |>
+guinea_pigs |>
   count(famID) |>
   ggplot(aes(x = n)) +
   geom_histogram(binwidth = 5, fill = "#377EB8", alpha = 0.85) +
@@ -170,14 +169,13 @@ gp |>
 ```{r single-family, eval = requireNamespace("ggpedigree", quietly = TRUE), fig.width = 8, fig.height = 5}
 library(ggpedigree)
 
-# Pick a mid-sized, well-connected family
-fam_summary <- gp |>
+fam_summary <- guinea_pigs |>
   filter(!is.na(momID) | !is.na(dadID)) |>
   count(famID) |>
   filter(n >= 15, n <= 40) |>
   arrange(desc(n))
 
-focal_fam <- gp |> filter(famID == fam_summary$famID[1])
+focal_fam <- guinea_pigs |> filter(famID == fam_summary$famID[1])
 
 ggPedigree(focal_fam,
   personID = "ID",
@@ -287,9 +285,9 @@ guinea_pigs |>
   filter(!is.na(p0), !is.na(clima)) |>
   group_by(Season = clima) |>
   summarise(
-    n             = n(),
-    mean_birthwt  = round(mean(p0, na.rm = TRUE), 1),
-    mean_p90      = round(mean(p90, na.rm = TRUE), 1)
+    n            = n(),
+    mean_birthwt = round(mean(p0, na.rm = TRUE), 1),
+    mean_p90     = round(mean(p90, na.rm = TRUE), 1)
   )
 ```
 
