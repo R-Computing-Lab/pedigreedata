@@ -74,16 +74,22 @@ growth_long <- guinea_pigs |>
 set.seed(42)
 ids <- sample(unique(growth_long$ID), 800)
 
-ggplot(growth_long |> filter(ID %in% ids),
-       aes(x = day, y = weight, group = ID)) +
+ggplot(
+  growth_long |> filter(ID %in% ids),
+  aes(x = day, y = weight, group = ID)
+) +
   geom_line(alpha = 0.08) +
   geom_smooth(aes(group = sexo, color = sexo), method = "loess", se = TRUE) +
   scale_x_continuous(breaks = c(0, 15, 30, 45, 60, 90)) +
-  scale_color_brewer(palette = "Set1",
-                     labels = c("H" = "Female", "M" = "Male"),
-                     na.value = "grey50") +
-  labs(title = "Guinea pig growth trajectories (days 0–90)",
-       x = "Day", y = "Weight (g)", color = "Sex") +
+  scale_color_brewer(
+    palette = "Set1",
+    labels = c("H" = "Female", "M" = "Male"),
+    na.value = "grey50"
+  ) +
+  labs(
+    title = "Guinea pig growth trajectories (days 0–90)",
+    x = "Day", y = "Weight (g)", color = "Sex"
+  ) +
   theme_minimal()
 ```
 
@@ -99,8 +105,10 @@ red_squirrels |>
   ggplot(aes(x = lrs, fill = sex)) +
   geom_histogram(binwidth = 1, alpha = 0.75, position = "identity") +
   scale_fill_brewer(palette = "Set1") +
-  labs(title = "Lifetime reproductive success by sex",
-       x = "LRS", y = "Count", fill = "Sex") +
+  labs(
+    title = "Lifetime reproductive success by sex",
+    x = "LRS", y = "Count", fill = "Sex"
+  ) +
   theme_minimal()
 ```
 
@@ -112,9 +120,11 @@ Each individual has a Wikipedia URL, making it straightforward to trace lineages
 ```{r wor-table}
 # Key claimants and their relationship to Edward III (id = 1)
 war_of_the_roses |>
-  filter(name %in% c("Edward III", "Henry IV", "Henry V", "Henry VI",
-                     "Richard Duke of York", "Edward IV", "Richard III",
-                     "Henry VII")) |>
+  filter(name %in% c(
+    "Edward III", "Henry IV", "Henry V", "Henry VI",
+    "Richard Duke of York", "Edward IV", "Richard III",
+    "Henry VII"
+  )) |>
   select(id, name, sex, momID, dadID) |>
   arrange(id)
 ```

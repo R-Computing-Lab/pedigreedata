@@ -59,7 +59,7 @@ test_that("war_of_the_roses twin pairs are symmetric", {
   if (nrow(twins) > 0) {
     # each twin's co-twin should also list them back
     for (i in seq_len(nrow(twins))) {
-      ego_id  <- twins$id[i]
+      ego_id <- twins$id[i]
       twin_id <- twins$twinID[i]
       cotwin_row <- war_of_the_roses[war_of_the_roses$id == twin_id, ]
       expect_equal(cotwin_row$twinID, ego_id)

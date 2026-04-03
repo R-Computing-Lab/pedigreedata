@@ -17,8 +17,10 @@ test_that("red_squirrels has required pedigree columns", {
 test_that("red_squirrels has required fitness columns", {
   data(red_squirrels, package = "pedigreedata")
   expect_true(all(
-    c("byear", "dyear", "lrs", "ars_mean", "ars_max", "ars_med",
-      "ars_min", "ars_sd", "ars_n", "year_first", "year_last") %in% names(red_squirrels)
+    c(
+      "byear", "dyear", "lrs", "ars_mean", "ars_max", "ars_med",
+      "ars_min", "ars_sd", "ars_n", "year_first", "year_last"
+    ) %in% names(red_squirrels)
   ))
 })
 

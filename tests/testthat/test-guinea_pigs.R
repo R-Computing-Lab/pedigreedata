@@ -17,9 +17,11 @@ test_that("guinea_pigs has required pedigree columns", {
 test_that("guinea_pigs has required phenotype columns", {
   data(guinea_pigs, package = "pedigreedata")
   expect_true(all(
-    c("sexo", "color", "clima", "gener",
+    c(
+      "sexo", "color", "clima", "gener",
       "tc_nac", "tc_destete",
-      "p0", "p15", "p30", "p45", "p60", "p90") %in% names(guinea_pigs)
+      "p0", "p15", "p30", "p45", "p60", "p90"
+    ) %in% names(guinea_pigs)
   ))
 })
 
