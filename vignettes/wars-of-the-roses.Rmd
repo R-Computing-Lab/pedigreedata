@@ -181,7 +181,8 @@ wor_plot <- checkSex(war_of_the_roses,
   checkParentIDs(
     addphantoms = TRUE, repair = TRUE,
     parentswithoutrow = FALSE, repairsex = FALSE
-  ) %>% rename(personID = ID)
+  ) %>%
+  rename(personID = ID)
 
 # Focal fill from Edward III (id = 1) shows degree of relatedness to the root
 ggPedigree(wor_plot,
@@ -190,20 +191,20 @@ ggPedigree(wor_plot,
   dadID = "dadID",
   famID = "famID",
   config = list(
-    code_male               = "M",
-    code_female             = "F",
-    code_na                 = "U",
-    label_column            = "name",
-    label_method            = "ggrepel",
-    label_include           = TRUE,
-    label_text_size         = 2,
-    label_text_angle        = -90,
-    label_nudge_x           = -0.05,
-    focal_fill_include      = TRUE,
-    focal_fill_personID     = 1,
-    focal_fill_force_zero   = TRUE,
-    sex_legend_show         = FALSE,
-    sex_color_include       = FALSE,
+    code_male = "M",
+    code_female = "F",
+    code_na = "U",
+    label_column = "name",
+    label_method = "ggrepel",
+    label_include = TRUE,
+    label_text_size = 2,
+    label_text_angle = -90,
+    label_nudge_x = -0.05,
+    focal_fill_include = TRUE,
+    focal_fill_personID = 1,
+    focal_fill_force_zero = TRUE,
+    sex_legend_show = FALSE,
+    sex_color_include = FALSE,
     focal_fill_force_zero = TRUE,
     focal_fill_mid_color = "orange",
     focal_fill_low_color = "#9F2A63FF",
@@ -225,15 +226,14 @@ differing proximity.
 But relatedness alone doesn't determine the rightful claim. The rules of succession were complex and contested, and different interpretations of the law of inheritance could yield different winners. 
 
 ```{r}
+wor_plot$edward_add <- ped2add(wor_plot, personID = "personID", momID = "momID", dadID = "dadID", sparse = FALSE)[, 1]
 
-wor_plot$edward_add <- ped2add(wor_plot, personID = "personID", momID = "momID", dadID = "dadID",sparse=FALSE)[,1]
-
-subset(wor_plot, name %in% c("Edward III", "Henry VII", "Richard III",
-                             "Edward V", "Henry VIII", "Elizabeth of York"
-                             )) |>
+subset(wor_plot, name %in% c(
+  "Edward III", "Henry VII", "Richard III",
+  "Edward V", "Henry VIII", "Elizabeth of York"
+)) |>
   select(name, edward_add) |>
   arrange(desc(edward_add))
-
 ```
 
 

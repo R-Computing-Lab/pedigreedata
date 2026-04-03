@@ -97,8 +97,8 @@ df <- ped2fam(raw_df, personID = "id") %>%
     ),
     dadID = case_when(
       personID == 1 ~ 115, # Edward III's father was Edward II, who is missing from the original dataset but is a critical ancestor for the pedigree structure. We add him as a new row with personID = 115 (see below).
-      TRUE ~ dadID),
-
+      TRUE ~ dadID
+    ),
     momID = case_when(
       personID == 1 ~ 116, # Edward III's mother was Isabella of France
       TRUE ~ momID
@@ -168,14 +168,14 @@ df <- ped2fam(raw_df, personID = "id") %>%
   addPersonToPed(
     personID = 107, name = "Henry of Grosmont, Duke of Lancaster",
     sex = "M", momID = 109,
-      dadID = 108,  # Henry, 3rd Earl of Lancaster
+    dadID = 108, # Henry, 3rd Earl of Lancaster
     url = "https://en.wikipedia.org/wiki/Henry_of_Grosmont,_Duke_of_Lancaster"
   ) %>%
   # https://en.wikipedia.org/wiki/Henry,_3rd_Earl_of_Lancaster
   addPersonToPed(
     personID = 108, name = "Henry, 3rd Earl of Lancaster",
     sex = "M",
-    momID = 110,  #	Blanche of Artois
+    momID = 110, # 	Blanche of Artois
     dadID = 111, # Edmund Crouchback, 1st Earl
     url = "https://en.wikipedia.org/wiki/Henry,_3rd_Earl_of_Lancaster"
   ) %>%
@@ -186,7 +186,7 @@ df <- ped2fam(raw_df, personID = "id") %>%
     momID = NA,
     dadID = NA,
     url = "https://en.wikipedia.org/wiki/Maud_Chaworth"
-) %>%
+  ) %>%
   # https://en.wikipedia.org/wiki/Blanche_of_Artois
   addPersonToPed(
     personID = 110, name = "Blanche of Artois",
@@ -200,7 +200,7 @@ df <- ped2fam(raw_df, personID = "id") %>%
     personID = 111, name = "Edmund Crouchback",
     sex = "M",
     momID = NA,
-    dadID = 112,# Henry III
+    dadID = 112, # Henry III
     url = "https://en.wikipedia.org/wiki/Edmund_Crouchback"
   ) %>%
   # https://en.wikipedia.org/wiki/Henry_III_of_England
