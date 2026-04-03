@@ -184,10 +184,10 @@ library(ggpedigree)
 fam_summary <- guinea_pigs |>
   filter(!is.na(momID) | !is.na(dadID)) |>
   count(famID) |>
- # filter(n >= 15, n <= 40) |>
+  # filter(n >= 15, n <= 40) |>
   arrange(desc(n))
 
-focal_fam <- guinea_pigs |> filter(famID == fam_summary$famID[2]) 
+focal_fam <- guinea_pigs |> filter(famID == fam_summary$famID[2])
 
 ggPedigree(focal_fam,
   personID = "ID",
