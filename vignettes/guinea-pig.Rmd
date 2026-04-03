@@ -37,7 +37,7 @@ library(BGmisc)
 data(guinea_pigs)
 ```
 
----
+
 
 # The pedigree
 ## Validate the pedigree
@@ -83,8 +83,8 @@ graph — sets of individuals linked by at least one parent-offspring
 relationship.
 
 ```{r fam-ids}
-gp <- ped2fam(gp, personID = "ID", famID = "famID")
-cat("Number of family groups:", n_distinct(gp$famID), "\n")
+gp <- ped2fam(gp, personID = "ID", famID = "fam.ID")
+cat("Number of family groups:", n_distinct(gp$fam.ID), "\n")
 ```
 
 
@@ -178,16 +178,16 @@ guinea_pigs |>
 
 ## A single family pedigree
 
-```{r single-family, eval = requireNamespace("ggpedigree", quietly = TRUE), fig.width = 8, fig.height = 5}
+```{r single-family, eval = FALSE& requireNamespace("ggpedigree", quietly = TRUE), fig.width = 8, fig.height = 5}
 library(ggpedigree)
 
 fam_summary <- guinea_pigs |>
   filter(!is.na(momID) | !is.na(dadID)) |>
   count(famID) |>
-  filter(n >= 15, n <= 40) |>
+ # filter(n >= 15, n <= 40) |>
   arrange(desc(n))
 
-focal_fam <- guinea_pigs |> filter(famID == fam_summary$famID[1])
+focal_fam <- guinea_pigs |> filter(famID == fam_summary$famID[2]) 
 
 ggPedigree(focal_fam,
   personID = "ID",
@@ -201,7 +201,7 @@ ggPedigree(focal_fam,
 )
 ```
 
----
+
 
 # Growth trajectories
 
@@ -268,7 +268,7 @@ guinea_pigs |>
   )
 ```
 
----
+
 
 # Seasonal variation
 
@@ -347,7 +347,7 @@ ggplot(
   theme_minimal()
 ```
 
----
+
 
 # Other characteristics
 
@@ -380,7 +380,6 @@ sapply(guinea_pigs[weight_cols], function(x) {
   setNames(paste0("Day ", c(0, 15, 30, 45, 60, 90)))
 ```
 
----
 
 # Source
 
