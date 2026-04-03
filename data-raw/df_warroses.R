@@ -81,7 +81,7 @@ df <- ped2fam(raw_df, personID = "id") %>%
       personID == 94 ~ "Edmund of Woodstock, 1st Earl of Kent",
       personID == 95 ~ "Margaret Wake, 3rd Baroness Wake of Liddell",
 
-      # (4) Parenthetical → cleaner names
+      # cleaner names
       personID == 17 ~ "Edward of Angoulême", # raw: "Edward (son of the Black Prince)"
       personID == 24 ~ "Constance of York", # raw: "Constance (daughter of Edmund of Langley)"
       personID == 28 ~ "Philippa of Lancaster", # raw: "Philippa (of Lancaster)"
@@ -94,6 +94,14 @@ df <- ped2fam(raw_df, personID = "id") %>%
       personID == 58 ~ "Elizabeth of York, Duchess of Suffolk", # raw: "Elizabeth (daughter of Richard Duke of York)"
       personID == 59 ~ "Margaret of York", # raw: "Margaret (daughter of Richard Duke of York)"
       TRUE ~ name
+    ),
+    dadID = case_when(
+      personID == 1 ~ 115, # Edward III's father was Edward II, who is missing from the original dataset but is a critical ancestor for the pedigree structure. We add him as a new row with personID = 115 (see below).
+      TRUE ~ dadID),
+
+    momID = case_when(
+      personID == 1 ~ 116, # Edward III's mother was Isabella of France
+      TRUE ~ momID
     )
   ) %>%
   # ── New additions: children of Edward IV + Elizabeth Woodville ───────────────
@@ -144,8 +152,95 @@ df <- ped2fam(raw_df, personID = "id") %>%
     personID = 104, name = "Mary Tudor, Queen of France",
     sex = "F", momID = 65, dadID = 64,
     url = "https://en.wikipedia.org/wiki/Mary_Tudor,_Queen_of_France"
+  ) %>%
+  addPersonToPed(
+    personID = 105, name = "Marie I de Coucy, Countess of Soissons",
+    sex = "F", momID = 5, dadID = 6,
+    url = "https://en.wikipedia.org/wiki/Marie_I_de_Coucy,_Countess_of_Soissons"
+  ) %>%
+  # https://en.wikipedia.org/wiki/Catherine_of_Lancaster
+  addPersonToPed(
+    personID = 106, name = "Catherine of Lancaster",
+    sex = "F", momID = 11, dadID = 10,
+    url = "https://en.wikipedia.org/wiki/Catherine_of_Lancaster"
+  ) %>%
+  # https://en.wikipedia.org/wiki/Henry_of_Grosmont,_Duke_of_Lancaster
+  addPersonToPed(
+    personID = 107, name = "Henry of Grosmont, Duke of Lancaster",
+    sex = "M", momID = 109,
+      dadID = 108,  # Henry, 3rd Earl of Lancaster
+    url = "https://en.wikipedia.org/wiki/Henry_of_Grosmont,_Duke_of_Lancaster"
+  ) %>%
+  # https://en.wikipedia.org/wiki/Henry,_3rd_Earl_of_Lancaster
+  addPersonToPed(
+    personID = 108, name = "Henry, 3rd Earl of Lancaster",
+    sex = "M",
+    momID = 110,  #	Blanche of Artois
+    dadID = 111, # Edmund Crouchback, 1st Earl
+    url = "https://en.wikipedia.org/wiki/Henry,_3rd_Earl_of_Lancaster"
+  ) %>%
+  # https://en.wikipedia.org/wiki/Maud_Chaworth
+  addPersonToPed(
+    personID = 109, name = "Maud Chaworth",
+    sex = "F",
+    momID = NA,
+    dadID = NA,
+    url = "https://en.wikipedia.org/wiki/Maud_Chaworth"
+) %>%
+  # https://en.wikipedia.org/wiki/Blanche_of_Artois
+  addPersonToPed(
+    personID = 110, name = "Blanche of Artois",
+    sex = "F",
+    momID = NA,
+    dadID = NA,
+    url = "https://en.wikipedia.org/wiki/Blanche_of_Artois"
+  ) %>%
+  # https://en.wikipedia.org/wiki/Edmund_Crouchback
+  addPersonToPed(
+    personID = 111, name = "Edmund Crouchback",
+    sex = "M",
+    momID = NA,
+    dadID = 112,# Henry III
+    url = "https://en.wikipedia.org/wiki/Edmund_Crouchback"
+  ) %>%
+  # https://en.wikipedia.org/wiki/Henry_III_of_England
+  addPersonToPed(
+    personID = 112, name = "Henry III",
+    sex = "M",
+    momID = 113, # Isabella of Angoulême
+    dadID = 114, # John, King of England
+    url = "https://en.wikipedia.org/wiki/Henry_III_of_England"
+  ) %>%
+  addPersonToPed(
+    personID = 113, name = "Isabella of Angoulême",
+    sex = "F",
+    momID = NA,
+    dadID = NA,
+    url = "https://en.wikipedia.org/wiki/Isabella_of_Angoul%C3%AAme"
+  ) %>%
+  addPersonToPed(
+    personID = 114, name = "John, King of England",
+    sex = "M",
+    momID = NA,
+    dadID = NA,
+    url = "https://en.wikipedia.org/wiki/John,_King_of_England"
+  ) %>%
+  # edward ii
+  addPersonToPed(
+    personID = 115, name = "Edward II",
+    sex = "M",
+    momID = NA, # 	Eleanor of Castile
+    dadID = NA, # Edward I
+    url = "https://en.wikipedia.org/wiki/Edward_II_of_England"
+  ) %>%
+  # 	Isabella of France
+  addPersonToPed(
+    personID = 116, name = "Isabella of France",
+    sex = "F",
+    momID = NA,
+    dadID = NA,
+    url = "https://en.wikipedia.org/wiki/Isabella_of_France"
   )
-
 
 ## Recalculate family groups after all modifications ---------------------------
 

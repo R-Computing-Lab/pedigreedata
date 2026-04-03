@@ -81,7 +81,7 @@ if (nrow(twins) > 0) {
 }
 ```
 
----
+
 
 # The competing claims
 
@@ -147,7 +147,7 @@ war_of_the_roses |>
   arrange(id)
 ```
 
----
+
 
 # The resolution: Henry VII
 
@@ -165,13 +165,14 @@ war_of_the_roses |>
   select(id, name, sex, momID, dadID)
 ```
 
----
+
 
 # Pedigree visualization
 
 ```{r pedigree-plot, fig.width = 12, fig.height = 8, eval = requireNamespace("ggpedigree", quietly = TRUE)}
 library(ggpedigree)
 library(BGmisc)
+library(ggplot2)
 
 # Validate pedigree for plotting
 wor_plot <- checkSex(war_of_the_roses,
@@ -180,11 +181,11 @@ wor_plot <- checkSex(war_of_the_roses,
   checkParentIDs(
     addphantoms = TRUE, repair = TRUE,
     parentswithoutrow = FALSE, repairsex = FALSE
-  )
+  ) %>% rename(personID = ID)
 
 # Focal fill from Edward III (id = 1) shows degree of relatedness to the root
 ggPedigree(wor_plot,
-  personID = "id",
+  personID = "personID",
   momID = "momID",
   dadID = "dadID",
   famID = "famID",
@@ -203,8 +204,16 @@ ggPedigree(wor_plot,
     focal_fill_force_zero   = TRUE,
     sex_legend_show         = FALSE,
     sex_color_include       = FALSE,
+    focal_fill_force_zero = TRUE,
+    focal_fill_mid_color = "orange",
+    focal_fill_low_color = "#9F2A63FF",
+    focal_fill_na_value = "black",
+    focal_fill_use_log = TRUE,
     focal_fill_legend_title = "Relatedness to\nEdward III"
   )
+) + labs(
+  title = "Pedigree of the Wars of the Roses",
+  subtitle = "Key claimants and their relationship to Edward III"
 )
 ```
 
@@ -213,7 +222,22 @@ Both Lancastrian and Yorkist claimants appear in mid-range values —
 confirming that both sides descended from him, but through paths of
 differing proximity.
 
----
+But relatedness alone doesn't determine the rightful claim. The rules of succession were complex and contested, and different interpretations of the law of inheritance could yield different winners. 
+
+```{r}
+
+wor_plot$edward_add <- ped2add(wor_plot, personID = "personID", momID = "momID", dadID = "dadID",sparse=FALSE)[,1]
+
+subset(wor_plot, name %in% c("Edward III", "Henry VII", "Richard III",
+                             "Edward V", "Henry VIII", "Elizabeth of York"
+                             )) |>
+  select(name, edward_add) |>
+  arrange(desc(edward_add))
+
+```
+
+
+If relatedness was the only criterion, then Edward IV (Yorkist) would have an equally strong claim as Richard III (Yorkist), and both would outrank Henry VII (Lancaster).
 
 # So who was the rightful king?
 
@@ -223,13 +247,14 @@ The answer depends entirely on the succession rule applied:
 |------|--------|-----------|
 | **Strict agnatic** (males only, eldest first) | Lancaster | John of Gaunt (son 4) outranks York's male-line descent from Edmund (son 5) |
 | **Cognatic primogeniture** (females can transmit claims) | York | Philippa of Clarence (from son 3) outranks John of Gaunt (son 4) |
+| **Highest Genetic Relatedness to Edward III** | Edward IV | Both Edward IV and Richard III have the same relatedness, but Edward IV's claim was stronger due to being the elder brother of Richard III. Henry VII's relatedness is lower, reflecting his more distant descent from Edward III. |
 | **Pragmatic/Tudor** | Henry VII | Unified both claims by conquest and marriage |
 
 The Yorkists had the stronger *hereditary* case; the Lancasters had
 possession of the throne for 60 years. Henry VII's genius was to make
 the question moot.
 
----
+
 
 # Source
 
