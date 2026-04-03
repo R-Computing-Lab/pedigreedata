@@ -114,9 +114,9 @@ than the last as the population expanded.
 
 ```{r generation-sex, fig.height = 3.5}
 guinea_pigs |>
-  filter(!is.na(gener), !is.na(sexo)) |>
-  count(gener, sexo) |>
-  ggplot(aes(x = factor(gener), y = n, fill = sexo)) +
+  filter(!is.na(gener), !is.na(sex)) |>
+  count(gener, sex) |>
+  ggplot(aes(x = factor(gener), y = n, fill = sex)) +
   geom_col(position = "dodge") +
   scale_fill_brewer(
     palette = "Set1",
@@ -213,7 +213,7 @@ life. Weights increase rapidly in the first 30 days, then plateau.
 ```{r growth-plot}
 growth_long <- guinea_pigs |>
   filter(!is.na(p0)) |>
-  select(ID, sexo, p0, p15, p30, p45, p60, p90) |>
+  select(ID, sex, p0, p15, p30, p45, p60, p90) |>
   pivot_longer(
     cols      = starts_with("p"),
     names_to  = "day",
@@ -232,7 +232,7 @@ ggplot(
   geom_jitter(alpha = 0.05, width = 1, height = 0) +
   geom_smooth(
     method = "loess", se = TRUE,
-    aes(group = sexo, color = sexo)
+    aes(group = sex, color = sex)
   ) +
   scale_x_continuous(breaks = c(0, 15, 30, 45, 60, 90)) +
   scale_color_brewer(
@@ -257,8 +257,8 @@ guinea pig growth and should be included as a covariate in any analysis.
 
 ```{r p90-summary}
 guinea_pigs |>
-  filter(!is.na(p90), !is.na(sexo)) |>
-  group_by(Sex = sexo) |>
+  filter(!is.na(p90), !is.na(sex)) |>
+  group_by(Sex = sex) |>
   summarise(
     n    = n(),
     mean = round(mean(p90), 1),
