@@ -60,7 +60,7 @@ gp <- checkSex(guinea_pigs,
 
 ```{r validate-parents}
 gp <- checkParentIDs(gp,
-  addphantoms       = TRUE,
+  addphantoms       = FALSE,
   repair            = TRUE,
   parentswithoutrow = FALSE,
   repairsex         = FALSE
