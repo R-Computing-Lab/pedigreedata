@@ -15,17 +15,21 @@ ped <- read_delim("data-raw/Pedigree4G.csv",
     ID = id,
     dadID = sire,
     momID = dam
-  )  %>%
-  mutate(ID = str_replace_all(ID, "-", "."),
-         dadID = str_replace_all(dadID, "-", "."),
-         momID = str_replace_all(momID, "-", "."),
-         momID = case_when(ID == "00111.3" & momID == "0011..1" ~ "0011.1",
-                           TRUE ~ momID
-         )
+  ) %>%
+  mutate(
+    ID = str_replace_all(ID, "-", "."),
+    dadID = str_replace_all(dadID, "-", "."),
+    momID = str_replace_all(momID, "-", "."),
+    momID = case_when(
+      ID == "00111.3" & momID == "0011..1" ~ "0011.1",
+      TRUE ~ momID
+    )
   )
 
-ped %>% filter(str_detect(ID, "M")) %>% select(ID, dadID, momID) %>% print(n = Inf)
-
+ped %>%
+  filter(str_detect(ID, "M")) %>%
+  select(ID, dadID, momID) %>%
+  print(n = Inf)
 
 
 # check for duplicate IDs
@@ -60,8 +64,9 @@ pheno <- read_delim("data-raw/FenotiposPesos90.csv",
     ID = str_replace_all(ID, "-", "."),
     dadID = str_replace_all(dadID, "-", "."),
     momID = str_replace_all(momID, "-", "."),
-    momID = case_when(ID == "00111.3" & momID == "0011..1" ~ "0011.1",
-                      TRUE ~ momID
+    momID = case_when(
+      ID == "00111.3" & momID == "0011..1" ~ "0011.1",
+      TRUE ~ momID
     ),
     # Standardize color: lowercase and strip whitespace
     color = tolower(trimws(color)),
@@ -70,10 +75,12 @@ pheno <- read_delim("data-raw/FenotiposPesos90.csv",
       p0 == "ABORTO" ~ NA_character_,
       TRUE ~ p0
     ))
-
   )
 
-pheno %>% filter(str_detect(dadID, "H")) %>% select(ID, dadID, momID) %>% print(n = Inf)
+pheno %>%
+  filter(str_detect(dadID, "H")) %>%
+  select(ID, dadID, momID) %>%
+  print(n = Inf)
 
 
 # observation -- for the children of founder fatehers, the offspring us the mother's id with the suffix .1, .2, etc. for the different offspring.
@@ -90,19 +97,21 @@ dup_id <- pheno %>%
 if (length(dup_id) > 0) {
   message("Duplicate IDs found: ", paste(dup_id, collapse = ", "))
   pheno %>%
-    filter(ID %in% dup_id) %>% select(ID, dadID, momID, sexo, p0, p15, p30, p45, p60, p90) %>%
-    arrange(ID) %>% print(n = Inf)
+    filter(ID %in% dup_id) %>%
+    select(ID, dadID, momID, sexo, p0, p15, p30, p45, p60, p90) %>%
+    arrange(ID) %>%
+    print(n = Inf)
 } else {
   message("No duplicate IDs found.")
 }
 # se if removing the - and replacing it with a . helps
 
 pheno <- pheno %>%
-  mutate(ID = str_replace_all(ID, "-", "."),
+  mutate(
+    ID = str_replace_all(ID, "-", "."),
     dadID = str_replace_all(dadID, "-", "."),
     momID = str_replace_all(momID, "-", ".")
   )
-
 
 
 guinea_pigs <- ped %>%
