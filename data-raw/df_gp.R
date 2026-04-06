@@ -97,7 +97,7 @@ validate_id_convention <- function(df, verbose = TRUE) {
 
 # corrections for known mismatches between the pedigree and phenotype datasets, keyed by child ID
 
-mom_corrections<- c(
+mom_corrections <- c(
   "00111.3" = "0011.1",
   "0251.22" = "251",
   "0251.31" = "251",
@@ -128,14 +128,9 @@ mom_corrections<- c(
 )
 
 
-
-
 #---
 # read in the data
 #---
-
-
-
 
 
 #  https://doi.org/10.6084/m9.figshare.31513204.v2
@@ -229,9 +224,11 @@ if (length(dup_id) > 0) {
 
 ped_check <- left_join(ped, pheno, by = "ID", suffix = c(".ped", ".data")) %>%
   filter(!is.na(dadID.ped) & !is.na(dadID.data) & dadID.ped != dadID.data |
-           !is.na(momID.ped) & !is.na(momID.data) & momID.ped != momID.data)
+    !is.na(momID.ped) & !is.na(momID.data) & momID.ped != momID.data)
 
-ped_check %>% select(ID, sexo, dadID.ped, dadID.data, momID.ped, momID.data) %>% print(n = Inf)
+ped_check %>%
+  select(ID, sexo, dadID.ped, dadID.data, momID.ped, momID.data) %>%
+  print(n = Inf)
 
 guinea_pigs <- ped %>%
   full_join(pheno, by = c("ID", "dadID", "momID")) %>%
