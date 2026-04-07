@@ -115,3 +115,21 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 114,6,NA,NA,"John, King of England",M,"https://en.wikipedia.org/wiki/John,_King_of_England",NA,NA
 115,1,NA,NA,Edward II,M,https://en.wikipedia.org/wiki/Edward_II_of_England,NA,NA
 116,1,NA,NA,Isabella of France,F,https://en.wikipedia.org/wiki/Isabella_of_France,NA,NA
+117,1,NA,NA,"Henry Percy, Hotspur",M,https://en.wikipedia.org/wiki/Henry_Percy_(Hotspur),NA,NA
+118,1,21,72,Elizabeth Mortimer,F,https://en.wikipedia.org/wiki/Elizabeth_Mortimer,NA,NA
+119,1,46,45,"Edmund Beaufort, 2nd Duke of Somerset",M,"https://en.wikipedia.org/wiki/Edmund_Beaufort,_2nd_Duke_of_Somerset",NA,NA
+120,1,49,50,"Anne Neville, Duchess of Buckingham",F,"https://en.wikipedia.org/wiki/Anne_Neville,_Duchess_of_Buckingham",NA,NA
+121,1,49,50,"Eleanor Neville, Countess of Northumberland",F,"https://en.wikipedia.org/wiki/Eleanor_Neville,_Countess_of_Northumberland",NA,NA
+122,1,49,50,"William Neville, Earl of Kent",M,"https://en.wikipedia.org/wiki/William_Neville,_1st_Earl_of_Kent",NA,NA
+123,1,118,117,"Henry Percy, 2nd Earl of Northumberland",M,"https://en.wikipedia.org/wiki/Henry_Percy,_2nd_Earl_of_Northumberland",NA,NA
+124,1,88,86,Eleanor Beauchamp,F,https://en.wikipedia.org/wiki/Eleanor_Beauchamp,NA,NA
+125,1,124,119,"Henry Beaufort, 3rd Duke of Somerset",M,"https://en.wikipedia.org/wiki/Henry_Beaufort,_3rd_Duke_of_Somerset",NA,NA
+126,1,124,119,"Edmund Beaufort, Duke of Somerset",M,https://en.wikipedia.org/wiki/Edmund_Beaufort_(died_1471),NA,NA
+127,1,124,119,"Margaret Beaufort, Countess of Stafford",F,"https://en.wikipedia.org/wiki/Margaret_Beaufort,_Countess_of_Stafford",NA,NA
+128,1,NA,NA,"Humphrey Stafford, 1st Duke of Buckingham",M,"https://en.wikipedia.org/wiki/Humphrey_Stafford,_1st_Duke_of_Buckingham",NA,NA
+129,1,120,128,"Humphrey Stafford, Earl of Stafford",M,"https://en.wikipedia.org/wiki/Humphrey_Stafford,_1st_Earl_of_Stafford",NA,NA
+130,1,121,123,"Henry Percy, 3rd Earl of Northumberland",M,"https://en.wikipedia.org/wiki/Henry_Percy,_3rd_Earl_of_Northumberland",NA,NA
+131,1,83,84,"John Neville, 1st Marquess of Montagu",M,"https://en.wikipedia.org/wiki/John_Neville,_1st_Marquess_of_Montagu",NA,NA
+132,1,35,76,Jasper Tudor,M,https://en.wikipedia.org/wiki/Jasper_Tudor,NA,NA
+133,1,90,91,"Catherine Woodville, Duchess of Buckingham",F,"https://en.wikipedia.org/wiki/Catherine_Woodville,_Duchess_of_Buckingham",NA,NA
+134,1,127,129,"Henry Stafford, 2nd Duke of Buckingham",M,"https://en.wikipedia.org/wiki/Henry_Stafford,_2nd_Duke_of_Buckingham",NA,NA

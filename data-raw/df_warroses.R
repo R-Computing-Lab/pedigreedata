@@ -240,6 +240,131 @@ df <- ped2fam(raw_df, personID = "id") %>%
     momID = NA,
     dadID = NA,
     url = "https://en.wikipedia.org/wiki/Isabella_of_France"
+  ) %>%
+  # ── Additions from Wikipedia Wars of the Roses family tree template ───────────
+  # Henry Percy "Hotspur" — founder; married Elizabeth Mortimer (118)  # Father	Henry Percy, 1st Earl of Northumberland
+                                                                       # Mother	Margaret Neville
+  addPersonToPed(
+    personID = 117, name = "Henry Percy, Hotspur",
+    sex = "M", momID = NA, dadID = NA,
+    url = "https://en.wikipedia.org/wiki/Henry_Percy_(Hotspur)"
+  ) %>%
+  # Elizabeth Mortimer — sibling of Roger Mortimer (73); both children of Edmund Mortimer
+  # 3rd Earl (72) and Philippa of Clarence (21)
+  addPersonToPed(
+    personID = 118, name = "Elizabeth Mortimer",
+    sex = "F", momID = 21, dadID = 72,
+    url = "https://en.wikipedia.org/wiki/Elizabeth_Mortimer"
+  ) %>%
+  # Edmund Beaufort, 2nd Duke of Somerset — son of John Beaufort 1st Earl (45) and
+  # Margaret Holland (46); brother of John Beaufort 1st Duke (78)
+  addPersonToPed(
+    personID = 119, name = "Edmund Beaufort, 2nd Duke of Somerset",
+    sex = "M", momID = 46, dadID = 45,
+    url = "https://en.wikipedia.org/wiki/Edmund_Beaufort,_2nd_Duke_of_Somerset"
+  ) %>%
+  # Anne Neville, Duchess of Buckingham — daughter of Joan Beaufort (49) and Ralph
+  # Neville (50); sister of Cecily Neville (52) and Richard Neville 5th Earl (84)
+  addPersonToPed(
+    personID = 120, name = "Anne Neville, Duchess of Buckingham",
+    sex = "F", momID = 49, dadID = 50,
+    url = "https://en.wikipedia.org/wiki/Anne_Neville,_Duchess_of_Buckingham"
+  ) %>%
+  # Eleanor Neville, Countess of Northumberland — daughter of Joan Beaufort (49) and
+  # Ralph Neville (50)
+  addPersonToPed(
+    personID = 121, name = "Eleanor Neville, Countess of Northumberland",
+    sex = "F", momID = 49, dadID = 50,
+    url = "https://en.wikipedia.org/wiki/Eleanor_Neville,_Countess_of_Northumberland"
+  ) %>%
+  # William Neville, Earl of Kent — son of Joan Beaufort (49) and Ralph Neville (50)
+  addPersonToPed(
+    personID = 122, name = "William Neville, Earl of Kent",
+    sex = "M", momID = 49, dadID = 50,
+    url = "https://en.wikipedia.org/wiki/William_Neville,_1st_Earl_of_Kent"
+  ) %>%
+  # Henry Percy, 2nd Earl of Northumberland — son of Hotspur (117) and Elizabeth
+  # Mortimer (118)
+  addPersonToPed(
+    personID = 123, name = "Henry Percy, 2nd Earl of Northumberland",
+    sex = "M", momID = 118, dadID = 117,
+    url = "https://en.wikipedia.org/wiki/Henry_Percy,_2nd_Earl_of_Northumberland"
+  ) %>%
+  # Eleanor Beauchamp — daughter of Richard Beauchamp 13th Earl (86) and Isabel
+  # Despenser (88); sibling of Anne Beauchamp (89)
+  addPersonToPed(
+    personID = 124, name = "Eleanor Beauchamp",
+    sex = "F", momID = 88, dadID = 86,
+    url = "https://en.wikipedia.org/wiki/Eleanor_Beauchamp"
+  ) %>%
+  # Henry Beaufort, 3rd Duke of Somerset — son of Edmund Beaufort 2nd Duke (119) and
+  # Eleanor Beauchamp (124); KIA at Battle of Hexham
+  addPersonToPed(
+    personID = 125, name = "Henry Beaufort, 3rd Duke of Somerset",
+    sex = "M", momID = 124, dadID = 119,
+    url = "https://en.wikipedia.org/wiki/Henry_Beaufort,_3rd_Duke_of_Somerset"
+  ) %>%
+  # Edmund Beaufort (died 1471) — son of Edmund Beaufort 2nd Duke (119) and Eleanor
+  # Beauchamp (124); executed after Battle of Tewkesbury
+  addPersonToPed(
+    personID = 126, name = "Edmund Beaufort, Duke of Somerset",
+    sex = "M", momID = 124, dadID = 119,
+    url = "https://en.wikipedia.org/wiki/Edmund_Beaufort_(died_1471)"
+  ) %>%
+  # Margaret Beaufort, Countess of Stafford — daughter of Edmund Beaufort 2nd Duke
+  # (119) and Eleanor Beauchamp (124); not to be confused with Lady Margaret Beaufort (80)
+  addPersonToPed(
+    personID = 127, name = "Margaret Beaufort, Countess of Stafford",
+    sex = "F", momID = 124, dadID = 119,
+    url = "https://en.wikipedia.org/wiki/Margaret_Beaufort,_Countess_of_Stafford"
+  ) %>%
+  # Humphrey Stafford, 1st Duke of Buckingham — founder; married Anne Neville (120)
+  addPersonToPed(
+    personID = 128, name = "Humphrey Stafford, 1st Duke of Buckingham",
+    sex = "M", momID = NA, dadID = NA,
+    url = "https://en.wikipedia.org/wiki/Humphrey_Stafford,_1st_Duke_of_Buckingham"
+  ) %>%
+  # Humphrey Stafford, Earl of Stafford — son of Humphrey 1st Duke (128) and Anne
+  # Neville (120); predeceased his father
+  addPersonToPed(
+    personID = 129, name = "Humphrey Stafford, Earl of Stafford",
+    sex = "M", momID = 120, dadID = 128,
+    url = "https://en.wikipedia.org/wiki/Humphrey_Stafford,_1st_Earl_of_Stafford"
+  ) %>%
+  # Henry Percy, 3rd Earl of Northumberland — son of Henry Percy 2nd Earl (123) and
+  # Eleanor Neville (121); KIA at Battle of Towton
+  addPersonToPed(
+    personID = 130, name = "Henry Percy, 3rd Earl of Northumberland",
+    sex = "M", momID = 121, dadID = 123,
+    url = "https://en.wikipedia.org/wiki/Henry_Percy,_3rd_Earl_of_Northumberland"
+  ) %>%
+  # John Neville, 1st Marquess of Montagu — son of Richard Neville 5th Earl (84) and
+  # Alice Montacute (83); sibling of Richard Neville Kingmaker (85)
+  addPersonToPed(
+    personID = 131, name = "John Neville, 1st Marquess of Montagu",
+    sex = "M", momID = 83, dadID = 84,
+    url = "https://en.wikipedia.org/wiki/John_Neville,_1st_Marquess_of_Montagu"
+  ) %>%
+  # Jasper Tudor — son of Owen Tudor (76) and Catherine of Valois (35); brother of
+  # Edmund Tudor (77); later married Catherine Woodville (133)
+  addPersonToPed(
+    personID = 132, name = "Jasper Tudor",
+    sex = "M", momID = 35, dadID = 76,
+    url = "https://en.wikipedia.org/wiki/Jasper_Tudor"
+  ) %>%
+  # Catherine Woodville, Duchess of Buckingham — daughter of Jacquetta of Luxembourg
+  # (90) and Richard Woodville (91); sibling of Elizabeth Woodville (56)
+  addPersonToPed(
+    personID = 133, name = "Catherine Woodville, Duchess of Buckingham",
+    sex = "F", momID = 90, dadID = 91,
+    url = "https://en.wikipedia.org/wiki/Catherine_Woodville,_Duchess_of_Buckingham"
+  ) %>%
+  # Henry Stafford, 2nd Duke of Buckingham — son of Humphrey Stafford Earl (129) and
+  # Margaret Beaufort Countess of Stafford (127); executed 1483
+  addPersonToPed(
+    personID = 134, name = "Henry Stafford, 2nd Duke of Buckingham",
+    sex = "M", momID = 127, dadID = 129,
+    url = "https://en.wikipedia.org/wiki/Henry_Stafford,_2nd_Duke_of_Buckingham"
   )
 
 ## Recalculate family groups after all modifications ---------------------------
@@ -270,7 +395,7 @@ df_repaired <- checkSex(war_of_the_roses,
 ## (Optional) plot — wrapped in if (FALSE) so it never runs automatically ------
 
 if (FALSE) {
-  ggpedigree::ggPedigree(df_repaired,
+  ggpedigree::ggPedigreeInteractive(df_repaired,
     personID = "personID",
     momID = "momID",
     dadID = "dadID",
@@ -280,17 +405,21 @@ if (FALSE) {
       code_female             = "F",
       code_na                 = "U",
       focal_fill_include      = TRUE,
+      focal_fill_use_log = TRUE,
+      focal_fill_mid_color = "orange",
+      focal_fill_low_color = "#9F2A63FF",
       focal_fill_force_zero   = TRUE,
       focal_fill_personID     = 1, # Edward III
       label_column            = "name",
-      label_method            = "ggrepel",
+      label_method = "geom_text",
       label_include           = TRUE,
       label_text_angle        = -90,
       label_text_size         = 2,
       label_nudge_x           = -0.05,
       sex_legend_show         = FALSE,
       sex_color_include       = FALSE
-    )
+    ),
+    tooltip_columns = c("personID", "name","focal_fill")
   )
 }
 
