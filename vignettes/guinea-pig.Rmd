@@ -178,7 +178,7 @@ guinea_pigs |>
 
 ## A single family pedigree
 
-```{r single-family, eval = FALSE& requireNamespace("ggpedigree", quietly = TRUE), fig.width = 8, fig.height = 5}
+```{r single-family, eval = FALSE & requireNamespace("ggpedigree", quietly = TRUE), fig.width = 8, fig.height = 5}
 library(ggpedigree)
 
 fam_summary <- guinea_pigs |>
@@ -187,7 +187,18 @@ fam_summary <- guinea_pigs |>
   # filter(n >= 15, n <= 40) |>
   arrange(desc(n))
 
-focal_fam <- guinea_pigs |> filter(famID == fam_summary$famID[2])
+focal_fam <- guinea_pigs |> filter(famID == fam_summary$famID[2]) %>%
+  filter(gener < 3| is.na(gener)) %>% 
+  # remove duplicate
+  group_by(ID) %>%
+  slice(1) %>%
+  ungroup() %>%
+  checkSex(
+  code_male   = "M",
+  code_female = "H",
+  verbose     = TRUE,
+  repair      = TRUE
+)
 
 ggPedigree(focal_fam,
   personID = "ID",
@@ -210,7 +221,7 @@ ggPedigree(focal_fam,
 Body weight was recorded at six time points across the first 90 days of
 life. Weights increase rapidly in the first 30 days, then plateau.
 
-```{r growth-plot}
+```{r growth-plot, warning = FALSE, message = FALSE, fig.height = 4.5}
 growth_long <- guinea_pigs |>
   filter(!is.na(p0)) |>
   select(ID, sex, p0, p15, p30, p45, p60, p90) |>
@@ -222,7 +233,7 @@ growth_long <- guinea_pigs |>
   mutate(day = as.numeric(stringr::str_remove(day, "p")))
 
 set.seed(42)
-sample_ids <- sample(unique(growth_long$ID), 1000)
+sample_ids <- sample(unique(growth_long$ID), 500)
 
 ggplot(
   growth_long |> filter(ID %in% sample_ids),
@@ -282,7 +293,7 @@ dam condition, and growth.
 guinea_pigs |>
   filter(!is.na(p0), !is.na(clima)) |>
   ggplot(aes(x = p0, fill = clima)) +
-  geom_histogram(binwidth = 15, alpha = 0.7, position = "identity") +
+  geom_histogram(binwidth = 15, alpha = 0.7, position = "dodge") +
   scale_fill_manual(
     values = c("invierno" = "#377EB8", "verano" = "#E41A1C"),
     labels = c("invierno" = "Winter", "verano" = "Summer")
@@ -322,7 +333,7 @@ growth_season <- guinea_pigs |>
   mutate(day = as.numeric(stringr::str_remove(day, "p")))
 
 set.seed(42)
-sample_ids2 <- sample(unique(growth_season$ID), 1000)
+sample_ids2 <- sample(unique(growth_season$ID), 400)
 
 ggplot(
   growth_season |> filter(ID %in% sample_ids2),

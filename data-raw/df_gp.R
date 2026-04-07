@@ -238,7 +238,7 @@ id_check <- dup_id[1]
 
 pheno %>% filter(ID %in% id_check | momID %in% id_check | dadID %in% id_check) -> test_df
 
-View(test_df)
+# View(test_df)
 
 validate_id_convention(pheno)
 
@@ -289,18 +289,24 @@ if (length(dup_id) > 0) {
 }
 
 # checks
-guinea_pigs_repaired <- checkSex(guinea_pigs,
+
+guinea_pigs_repaired <- recodeSex(guinea_pigs,
+  code_male   = "M",
+  code_female = "H"
+) %>% checkSex(.,
   code_male   = "M",
   code_female = "H",
   verbose     = TRUE,
   repair      = TRUE
-) %>%
-  checkParentIDs(
-    addphantoms       = F,
-    repair            = TRUE,
-    parentswithoutrow = FALSE,
-    repairsex         = FALSE
-  )
+)
+
+
+checkParentIDs(
+  addphantoms       = F,
+  repair            = TRUE,
+  parentswithoutrow = FALSE,
+  repairsex         = TRUE
+)
 
 checkIDs(guinea_pigs_repaired)
 
@@ -311,10 +317,6 @@ checkis_acyclic <- checkPedigreeNetwork(guinea_pigs_repaired,
   verbose  = TRUE
 )
 checkis_acyclic
-
-
-
-
 
 
 #----
