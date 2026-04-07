@@ -126,10 +126,14 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 125,1,124,119,"Henry Beaufort, 3rd Duke of Somerset",M,"https://en.wikipedia.org/wiki/Henry_Beaufort,_3rd_Duke_of_Somerset",NA,NA
 126,1,124,119,"Edmund Beaufort, Duke of Somerset",M,https://en.wikipedia.org/wiki/Edmund_Beaufort_(died_1471),NA,NA
 127,1,124,119,"Margaret Beaufort, Countess of Stafford",F,"https://en.wikipedia.org/wiki/Margaret_Beaufort,_Countess_of_Stafford",NA,NA
-128,1,NA,NA,"Humphrey Stafford, 1st Duke of Buckingham",M,"https://en.wikipedia.org/wiki/Humphrey_Stafford,_1st_Duke_of_Buckingham",NA,NA
+128,1,135,136,"Humphrey Stafford, 1st Duke of Buckingham",M,"https://en.wikipedia.org/wiki/Humphrey_Stafford,_1st_Duke_of_Buckingham",NA,NA
 129,1,120,128,"Humphrey Stafford, Earl of Stafford",M,"https://en.wikipedia.org/wiki/Humphrey_Stafford,_1st_Earl_of_Stafford",NA,NA
 130,1,121,123,"Henry Percy, 3rd Earl of Northumberland",M,"https://en.wikipedia.org/wiki/Henry_Percy,_3rd_Earl_of_Northumberland",NA,NA
 131,1,83,84,"John Neville, 1st Marquess of Montagu",M,"https://en.wikipedia.org/wiki/John_Neville,_1st_Marquess_of_Montagu",NA,NA
 132,1,35,76,Jasper Tudor,M,https://en.wikipedia.org/wiki/Jasper_Tudor,NA,NA
 133,1,90,91,"Catherine Woodville, Duchess of Buckingham",F,"https://en.wikipedia.org/wiki/Catherine_Woodville,_Duchess_of_Buckingham",NA,NA
 134,1,127,129,"Henry Stafford, 2nd Duke of Buckingham",M,"https://en.wikipedia.org/wiki/Henry_Stafford,_2nd_Duke_of_Buckingham",NA,NA
+135,1,16,15,Anne of Gloucester,F,"https://en.wikipedia.org/wiki/Anne_of_Gloucester,_Duchess_of_Buckingham",NA,NA
+136,1,NA,NA,"Edmund of Stafford, 5th Earl of Stafford",M,"https://en.wikipedia.org/wiki/Edmund_of_Stafford,_5th_Earl_of_Stafford",NA,NA
+137,1,60,61,"Edward, Earl of Warwick",M,"https://en.wikipedia.org/wiki/Edward_Plantagenet,_17th_Earl_of_Warwick",NA,NA
+138,1,60,61,"Margaret Plantagenet, Countess of Salisbury",F,"https://en.wikipedia.org/wiki/Margaret_Pole,_Countess_of_Salisbury",NA,NA

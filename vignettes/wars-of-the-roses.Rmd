@@ -29,7 +29,7 @@ The `war_of_the_roses` dataset encodes this pedigree — `r nrow(pedigreedata::w
 ```{r load}
 library(pedigreedata)
 library(dplyr)
-
+library(quadprog)
 data(war_of_the_roses)
 head(war_of_the_roses[, c("id", "name", "sex", "momID", "dadID", "famID")])
 ```

@@ -35,7 +35,8 @@ decades, with fitness measures for most of them.
 library(pedigreedata)
 library(ggplot2)
 library(dplyr)
-
+library(quadprog)
+library(ggpedigree)
 data(red_squirrels)
 head(red_squirrels)
 ```
