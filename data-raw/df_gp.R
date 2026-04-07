@@ -124,7 +124,8 @@ mom_corrections <- c(
   "0108.41" = "108",
   "0108.42" = "108",
   "0108.43" = "108",
-  "0108.44" = "108"
+  "0108.44" = "108",
+  "008535322.1" = "00853532.02"
 )
 
 
@@ -152,7 +153,23 @@ ped <- read_delim("data-raw/Pedigree4G.csv",
   repair_parent_ids(
     parent_col = "momID",
     corrections = mom_corrections
+  ) %>%
+  mutate(
+    ID = case_when(
+      ID == "01553422.21" & momID == "0155342.2" ~ "015534202.21",
+      ID == "0083233.21" & momID == "008323.3" ~ "00832303.21",
+      ID == "00853532.2" & momID == "0085353.2" ~ "00853532.02",
+      ID == "00853532.21" & momID == "0085353.2" ~ "008535302.21",
+      ID == "00853532.22" & momID == "0085353.2" ~ "008535302.22",
+      ID == "01553421.1" & momID == "0155342.1" ~ "015534201.1",
+      ID == "01553422.1" & momID == "015534.22" ~ "01553422.01",
+      ID == "01553424.3" & momID == "0155342.4" ~ "01553424.03",
+      TRUE ~ ID
+    )
   )
+
+
+
 # check for duplicate IDs
 dup_id <- ped %>%
   group_by(ID) %>%
@@ -196,17 +213,38 @@ pheno <- read_delim("data-raw/FenotiposPesos90.csv",
   repair_parent_ids(
     parent_col = "momID",
     corrections = mom_corrections
+  )  %>%
+  mutate(
+    ID = case_when(
+      ID == "01553422.21" & momID == "0155342.2" ~ "015534202.21",
+      ID == "0083233.21" & momID == "008323.3" ~ "00832303.21",
+      ID == "00853532.2" & momID == "0085353.2" ~ "00853532.02",
+      ID == "00853532.21" & momID == "0085353.2" ~ "008535302.21",
+      ID == "00853532.22" & momID == "0085353.2" ~ "008535302.22",
+      ID == "01553421.1" & momID == "0155342.1" ~ "015534201.1",
+      ID == "01553424.3" & momID == "0155342.4" ~ "01553424.03",
+      TRUE ~ ID
+    )
   )
-
-
-validate_id_convention(pheno)
-
-# check for duplicate IDs
 dup_id <- pheno %>%
   group_by(ID) %>%
   summarise(n = n()) %>%
   filter(n > 1) %>%
   pull(ID)
+
+#[1] "00853532.2"  "00853532.21" "00853532.22" "01553421.1"  "01553421.2"  "01553421.3"  "01553422.1"  "01553422.22"
+#[9] "01553422.23" "01553422.31" "01553422.32" "01553422.33" "01553422.34" "01553424.1"  "01553424.2"  "01553424.21"
+#[17] "01553424.22" "01553424.23" "01553424.3"  "02502121.3"
+id_check <- dup_id[1]
+
+pheno %>% filter(ID %in% id_check | momID %in% id_check | dadID %in% id_check) -> test_df
+
+View(test_df)
+
+validate_id_convention(pheno)
+
+# check for duplicate IDs
+
 
 if (length(dup_id) > 0) {
   message("Duplicate IDs found: ", paste(dup_id, collapse = ", "))
@@ -275,6 +313,12 @@ checkis_acyclic <- checkPedigreeNetwork(guinea_pigs_repaired,
 )
 checkis_acyclic
 
+
+
+
+
+
+#----
 if (FALSE) {
   library(ggplot2)
 
