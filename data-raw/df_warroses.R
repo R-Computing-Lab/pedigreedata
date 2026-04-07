@@ -243,7 +243,7 @@ df <- ped2fam(raw_df, personID = "id") %>%
   ) %>%
   # ── Additions from Wikipedia Wars of the Roses family tree template ───────────
   # Henry Percy "Hotspur" — founder; married Elizabeth Mortimer (118)  # Father	Henry Percy, 1st Earl of Northumberland
-                                                                       # Mother	Margaret Neville
+  # Mother	Margaret Neville
   addPersonToPed(
     personID = 117, name = "Henry Percy, Hotspur",
     sex = "M", momID = NA, dadID = NA,
@@ -430,25 +430,25 @@ if (FALSE) {
     dadID = "dadID",
     famID = "famID",
     config = list(
-      code_male               = "M",
-      code_female             = "F",
-      code_na                 = "U",
-      focal_fill_include      = TRUE,
+      code_male = "M",
+      code_female = "F",
+      code_na = "U",
+      focal_fill_include = TRUE,
       focal_fill_use_log = TRUE,
       focal_fill_mid_color = "orange",
       focal_fill_low_color = "#9F2A63FF",
-      focal_fill_force_zero   = TRUE,
-      focal_fill_personID     = 1, # Edward III
-      label_column            = "name",
+      focal_fill_force_zero = TRUE,
+      focal_fill_personID = 1, # Edward III
+      label_column = "name",
       label_method = "geom_text",
-      label_include           = TRUE,
-      label_text_angle        = -90,
-      label_text_size         = 2,
-      label_nudge_x           = -0.05,
-      sex_legend_show         = FALSE,
-      sex_color_include       = FALSE
+      label_include = TRUE,
+      label_text_angle = -90,
+      label_text_size = 2,
+      label_nudge_x = -0.05,
+      sex_legend_show = FALSE,
+      sex_color_include = FALSE
     ),
-    tooltip_columns = c("personID", "name","focal_fill")
+    tooltip_columns = c("personID", "name", "focal_fill")
   )
 }
 
