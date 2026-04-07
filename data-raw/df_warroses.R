@@ -318,10 +318,12 @@ df <- ped2fam(raw_df, personID = "id") %>%
     sex = "F", momID = 124, dadID = 119,
     url = "https://en.wikipedia.org/wiki/Margaret_Beaufort,_Countess_of_Stafford"
   ) %>%
-  # Humphrey Stafford, 1st Duke of Buckingham — founder; married Anne Neville (120)
+  # Humphrey Stafford, 1st Duke of Buckingham — son of Edmund of Stafford (136) and
+  # Anne of Gloucester (135); his Plantagenet blood (via Thomas of Woodstock) combined
+  # with his son's Beaufort marriage made Henry Stafford 2nd Duke a dual-dynasty claimant
   addPersonToPed(
     personID = 128, name = "Humphrey Stafford, 1st Duke of Buckingham",
-    sex = "M", momID = NA, dadID = NA,
+    sex = "M", momID = 135, dadID = 136,
     url = "https://en.wikipedia.org/wiki/Humphrey_Stafford,_1st_Duke_of_Buckingham"
   ) %>%
   # Humphrey Stafford, Earl of Stafford — son of Humphrey 1st Duke (128) and Anne
@@ -365,6 +367,33 @@ df <- ped2fam(raw_df, personID = "id") %>%
     personID = 134, name = "Henry Stafford, 2nd Duke of Buckingham",
     sex = "M", momID = 127, dadID = 129,
     url = "https://en.wikipedia.org/wiki/Henry_Stafford,_2nd_Duke_of_Buckingham"
+  ) %>%
+  # Anne of Gloucester — daughter of Thomas of Woodstock (15) and Eleanor de Bohun (16);
+  # married Edmund of Stafford (136); connects Stafford line to Edward III
+  addPersonToPed(
+    personID = 135, name = "Anne of Gloucester",
+    sex = "F", momID = 16, dadID = 15,
+    url = "https://en.wikipedia.org/wiki/Anne_of_Gloucester,_Duchess_of_Buckingham"
+  ) %>%
+  # Edmund of Stafford, 5th Earl of Stafford — founder; married Anne of Gloucester (135)
+  addPersonToPed(
+    personID = 136, name = "Edmund of Stafford, 5th Earl of Stafford",
+    sex = "M", momID = NA, dadID = NA,
+    url = "https://en.wikipedia.org/wiki/Edmund_of_Stafford,_5th_Earl_of_Stafford"
+  ) %>%
+  # Edward, Earl of Warwick — son of George, Duke of Clarence (61) and Isabella Neville (60);
+  # last Plantagenet male; Henry VII imprisoned him from age 10 and executed him in 1499
+  addPersonToPed(
+    personID = 137, name = "Edward, Earl of Warwick",
+    sex = "M", momID = 60, dadID = 61,
+    url = "https://en.wikipedia.org/wiki/Edward_Plantagenet,_17th_Earl_of_Warwick"
+  ) %>%
+  # Margaret Plantagenet, Countess of Salisbury — daughter of George, Duke of Clarence (61)
+  # and Isabella Neville (60); last surviving Plantagenet; executed by Henry VIII in 1541
+  addPersonToPed(
+    personID = 138, name = "Margaret Plantagenet, Countess of Salisbury",
+    sex = "F", momID = 60, dadID = 61,
+    url = "https://en.wikipedia.org/wiki/Margaret_Pole,_Countess_of_Salisbury"
   )
 
 ## Recalculate family groups after all modifications ---------------------------
