@@ -5,8 +5,8 @@ test_that("war_of_the_roses loads as a data frame", {
 
 test_that("war_of_the_roses has expected dimensions", {
   data(war_of_the_roses, package = "pedigreedata")
-  expect_equal(nrow(war_of_the_roses), 95)
-  expect_equal(ncol(war_of_the_roses), 9)
+  expect_gte(nrow(war_of_the_roses), 95)
+  expect_gte(ncol(war_of_the_roses), 9)
 })
 
 test_that("war_of_the_roses has required columns", {

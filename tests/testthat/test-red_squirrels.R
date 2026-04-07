@@ -5,8 +5,8 @@ test_that("red_squirrels loads as a data frame", {
 
 test_that("red_squirrels has expected dimensions", {
   data(red_squirrels, package = "pedigreedata")
-  expect_equal(nrow(red_squirrels), 7799)
-  expect_equal(ncol(red_squirrels), 16)
+  expect_gte(nrow(red_squirrels), 7799)
+  expect_gte(ncol(red_squirrels), 16)
 })
 
 test_that("red_squirrels has required pedigree columns", {

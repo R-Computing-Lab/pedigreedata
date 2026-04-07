@@ -5,8 +5,8 @@ test_that("guinea_pigs loads as a data frame", {
 
 test_that("guinea_pigs has expected dimensions", {
   data(guinea_pigs, package = "pedigreedata")
-  expect_gt(nrow(guinea_pigs), 0)
-  expect_gt(ncol(guinea_pigs), 0)
+  expect_gt(nrow(guinea_pigs), 7000)
+  expect_gt(ncol(guinea_pigs), 12)
 })
 
 test_that("guinea_pigs has required pedigree columns", {
