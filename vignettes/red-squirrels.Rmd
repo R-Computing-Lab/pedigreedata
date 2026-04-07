@@ -162,7 +162,7 @@ sq <- checkParentIDs(sq,
 )
 
 net <- checkPedigreeNetwork(sq,
-  personID = "personID",
+  personID = "ID",
   momID    = "momID",
   dadID    = "dadID",
   verbose  = TRUE
@@ -185,7 +185,7 @@ fam_summary <- sq |>
 focal_fam <- sq |> filter(famID == fam_summary$famID[1])
 
 ggPedigree(focal_fam,
-  personID = "personID",
+  personID = "ID",
   momID = "momID",
   dadID = "dadID",
   config = list(

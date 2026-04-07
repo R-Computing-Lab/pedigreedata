@@ -155,7 +155,7 @@ guinea_pigs |>
   summarise(
     mean_born   = round(mean(tc_nac), 2),
     mean_weaned = round(mean(tc_destete), 2),
-    mean_surv   = round(mean(survived), 3)
+    prop_surv   = round(mean(survived), 3)
   )
 ```
 
