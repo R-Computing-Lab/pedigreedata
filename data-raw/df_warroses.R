@@ -96,7 +96,7 @@ df <- ped2fam(raw_df, personID = "id") %>%
       TRUE ~ name
     ),
     dadID = case_when(
-      personID == 1 ~ 115, # Edward III's father was Edward II, who is missing from the original dataset but is a critical ancestor for the pedigree structure. We add him as a new row with personID = 115 (see below).
+      personID == 1 ~ 115, # Edward III's father was Edward II
       TRUE ~ dadID
     ),
     momID = case_when(
@@ -104,8 +104,15 @@ df <- ped2fam(raw_df, personID = "id") %>%
       TRUE ~ momID
     )
   ) %>%
+  addPersonToPed(
+    personID = 9, name = "Blanche of Lancaster",
+    sex = "F",
+    momID = 151, #  Isabel of Beaumont
+    dadID = 107, # 	Henry of Grosmont, Duke of Lancaster
+    url = "https://en.wikipedia.org/wiki/Blanche_of_Lancaster",
+    overwrite = TRUE
+  ) %>%
   # ── New additions: children of Edward IV + Elizabeth Woodville ───────────────
-  # SVG notes "others" — these children complete the York generation
   addPersonToPed(
     personID = 96, name = "Mary of York",
     sex = "F", momID = 56, dadID = 55,
@@ -199,7 +206,7 @@ df <- ped2fam(raw_df, personID = "id") %>%
   addPersonToPed(
     personID = 111, name = "Edmund Crouchback",
     sex = "M",
-    momID = NA,
+    momID = 139, # Eleanor of Provence
     dadID = 112, # Henry III
     url = "https://en.wikipedia.org/wiki/Edmund_Crouchback"
   ) %>%
@@ -221,16 +228,16 @@ df <- ped2fam(raw_df, personID = "id") %>%
   addPersonToPed(
     personID = 114, name = "John, King of England",
     sex = "M",
-    momID = NA,
-    dadID = NA,
+    momID = 141, # Eleanor, Duchess of Aquitaine
+    dadID = 140, # Henry II, King of England
     url = "https://en.wikipedia.org/wiki/John,_King_of_England"
   ) %>%
   # edward ii
   addPersonToPed(
     personID = 115, name = "Edward II",
     sex = "M",
-    momID = NA, # 	Eleanor of Castile
-    dadID = NA, # Edward I
+    momID = 150, # 	Eleanor of Castile
+    dadID = 149, # Edward I
     url = "https://en.wikipedia.org/wiki/Edward_II_of_England"
   ) %>%
   # 	Isabella of France
@@ -394,7 +401,80 @@ df <- ped2fam(raw_df, personID = "id") %>%
     personID = 138, name = "Margaret Plantagenet, Countess of Salisbury",
     sex = "F", momID = 60, dadID = 61,
     url = "https://en.wikipedia.org/wiki/Margaret_Pole,_Countess_of_Salisbury"
+  ) %>%
+  addPersonToPed(
+    personID = 139, name = "Eleanor of Provence",
+    sex = "F", momID = NA, dadID = NA,
+    url = "https://en.wikipedia.org/wiki/Eleanor_of_Provence"
+  ) %>%
+  addPersonToPed(
+    personID = 140, name = "Henry II, King of England",
+    sex = "M", momID = 142, # Empress Matilda
+    dadID = 143, # Geoffrey Plantagenet, Count of Anjou
+    url = "https://en.wikipedia.org/wiki/Henry_II_of_England"
+  ) %>%
+  addPersonToPed(
+    personID = 141, name = "Eleanor, Duchess of Aquitaine",
+    sex = "F", momID = NA,
+    dadID = NA,
+    url = "https://en.wikipedia.org/wiki/Eleanor_of_Aquitaine"
+  ) %>%
+  addPersonToPed(
+    personID = 142, name = "Empress Matilda",
+    sex = "F", momID = 148, # 	Matilda of Scotland
+    dadID = 144, # Henry I, King of England
+    url = "https://en.wikipedia.org/wiki/Empress_Matilda"
+  ) %>%
+  addPersonToPed(
+    personID = 143, name = "Geoffrey Plantagenet, Count of Anjou",
+    sex = "M", momID = NA, dadID = NA,
+    url = "https://en.wikipedia.org/wiki/Geoffrey_Plantagenet,_Count_of_Anjou"
+  ) %>%
+  addPersonToPed(
+    personID = 144, name = "Henry I, King of England",
+    sex = "M", momID = 145, # Matilda of Flanders
+    dadID = 146, # William the Conqueror
+    url = "https://en.wikipedia.org/wiki/Henry_I_of_England"
+  ) %>%
+  addPersonToPed(
+    personID = 145, name = "Matilda of Flanders",
+    sex = "F", momID = NA, dadID = NA,
+    url = "https://en.wikipedia.org/wiki/Matilda_of_Flanders"
+  ) %>%
+  addPersonToPed(
+    personID = 146, name = "William the Conqueror",
+    sex = "M", momID = NA, dadID = NA,
+    url = "https://en.wikipedia.org/wiki/William_the_Conqueror"
+  ) %>%
+  addPersonToPed(
+    personID = 147, name = "William Adelin",
+    sex = "M", momID = 148, # 	Matilda of Scotland
+    dadID = 144, # Henry I, King of England
+    url = "https://en.wikipedia.org/wiki/William_Adelin"
+  ) %>%
+  addPersonToPed(
+    personID = 148, name = "Matilda of Scotland",
+    sex = "F", momID = NA, # 	Margaret of Wessex
+    dadID = NA, # 	Malcolm III of Scotland
+    url = "https://en.wikipedia.org/wiki/Matilda_of_Scotland"
+  ) %>%
+  addPersonToPed(
+    personID = 149, name = "Edward I of England",
+    sex = "M", momID = 139, # 	Eleanor of Provence
+    dadID = 112, # Henry III
+    url = "https://en.wikipedia.org/wiki/Edward_I_of_England"
+  ) %>%
+  addPersonToPed(
+    personID = 150, name = "Eleanor of Castile",
+    sex = "F", momID = NA, dadID = NA,
+    url = "https://en.wikipedia.org/wiki/Eleanor_of_Castile"
+  ) %>%
+  addPersonToPed(
+    personID = 151, name = "Isabel of Beaumont",
+    sex = "F", momID = NA, dadID = NA,
+    url = "https://en.wikipedia.org/wiki/Isabel_of_Beaumont"
   )
+
 
 ## Recalculate family groups after all modifications ---------------------------
 
@@ -419,6 +499,10 @@ df_repaired <- checkSex(war_of_the_roses,
     repairsex         = FALSE
   ) %>%
   rename(personID = ID)
+
+
+
+
 
 
 ## (Optional) plot — wrapped in if (FALSE) so it never runs automatically ------

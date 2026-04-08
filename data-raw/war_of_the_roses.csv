@@ -7,7 +7,7 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 6,1,NA,NA,Enguerrand VII Lord of Coucy,M,https://en.wikipedia.org/wiki/Enguerrand_VII_de_Coucy,NA,NA
 7,1,NA,NA,Elizabeth de Burgh,F,https://en.wikipedia.org/wiki/Elizabeth_de_Burgh%2C_4th_Countess_of_Ulster,NA,NA
 8,1,2,1,Lionel of Antwerp,M,https://en.wikipedia.org/wiki/Lionel_of_Antwerp%2C_Duke_of_Clarence,NA,NA
-9,1,NA,NA,Blanche of Lancaster,F,https://en.wikipedia.org/wiki/Blanche_of_Lancaster,NA,NA
+9,1,151,107,Blanche of Lancaster,F,https://en.wikipedia.org/wiki/Blanche_of_Lancaster,NA,NA
 10,1,2,1,John of Gaunt,M,https://en.wikipedia.org/wiki/John_of_Gaunt,NA,NA
 11,1,NA,NA,Constance of Castile,F,https://en.wikipedia.org/wiki/Constance_of_Castile%2C_Duchess_of_Lancaster,NA,NA
 12,1,NA,NA,Katherine Swynford,F,https://en.wikipedia.org/wiki/Katherine_Swynford,NA,NA
@@ -105,15 +105,15 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 104,1,65,64,"Mary Tudor, Queen of France",F,"https://en.wikipedia.org/wiki/Mary_Tudor,_Queen_of_France",NA,NA
 105,1,5,6,"Marie I de Coucy, Countess of Soissons",F,"https://en.wikipedia.org/wiki/Marie_I_de_Coucy,_Countess_of_Soissons",NA,NA
 106,1,11,10,Catherine of Lancaster,F,https://en.wikipedia.org/wiki/Catherine_of_Lancaster,NA,NA
-107,6,109,108,"Henry of Grosmont, Duke of Lancaster",M,"https://en.wikipedia.org/wiki/Henry_of_Grosmont,_Duke_of_Lancaster",NA,NA
-108,6,110,111,"Henry, 3rd Earl of Lancaster",M,"https://en.wikipedia.org/wiki/Henry,_3rd_Earl_of_Lancaster",NA,NA
-109,6,NA,NA,Maud Chaworth,F,https://en.wikipedia.org/wiki/Maud_Chaworth,NA,NA
-110,6,NA,NA,Blanche of Artois,F,https://en.wikipedia.org/wiki/Blanche_of_Artois,NA,NA
-111,6,NA,112,Edmund Crouchback,M,https://en.wikipedia.org/wiki/Edmund_Crouchback,NA,NA
-112,6,113,114,Henry III,M,https://en.wikipedia.org/wiki/Henry_III_of_England,NA,NA
-113,6,NA,NA,Isabella of Angoulême,F,https://en.wikipedia.org/wiki/Isabella_of_Angoul%C3%AAme,NA,NA
-114,6,NA,NA,"John, King of England",M,"https://en.wikipedia.org/wiki/John,_King_of_England",NA,NA
-115,1,NA,NA,Edward II,M,https://en.wikipedia.org/wiki/Edward_II_of_England,NA,NA
+107,1,109,108,"Henry of Grosmont, Duke of Lancaster",M,"https://en.wikipedia.org/wiki/Henry_of_Grosmont,_Duke_of_Lancaster",NA,NA
+108,1,110,111,"Henry, 3rd Earl of Lancaster",M,"https://en.wikipedia.org/wiki/Henry,_3rd_Earl_of_Lancaster",NA,NA
+109,1,NA,NA,Maud Chaworth,F,https://en.wikipedia.org/wiki/Maud_Chaworth,NA,NA
+110,1,NA,NA,Blanche of Artois,F,https://en.wikipedia.org/wiki/Blanche_of_Artois,NA,NA
+111,1,139,112,Edmund Crouchback,M,https://en.wikipedia.org/wiki/Edmund_Crouchback,NA,NA
+112,1,113,114,Henry III,M,https://en.wikipedia.org/wiki/Henry_III_of_England,NA,NA
+113,1,NA,NA,Isabella of Angoulême,F,https://en.wikipedia.org/wiki/Isabella_of_Angoul%C3%AAme,NA,NA
+114,1,141,140,"John, King of England",M,"https://en.wikipedia.org/wiki/John,_King_of_England",NA,NA
+115,1,150,149,Edward II,M,https://en.wikipedia.org/wiki/Edward_II_of_England,NA,NA
 116,1,NA,NA,Isabella of France,F,https://en.wikipedia.org/wiki/Isabella_of_France,NA,NA
 117,1,NA,NA,"Henry Percy, Hotspur",M,https://en.wikipedia.org/wiki/Henry_Percy_(Hotspur),NA,NA
 118,1,21,72,Elizabeth Mortimer,F,https://en.wikipedia.org/wiki/Elizabeth_Mortimer,NA,NA
@@ -137,3 +137,16 @@ id,famID,momID,dadID,name,sex,url,twinID,zygosity
 136,1,NA,NA,"Edmund of Stafford, 5th Earl of Stafford",M,"https://en.wikipedia.org/wiki/Edmund_of_Stafford,_5th_Earl_of_Stafford",NA,NA
 137,1,60,61,"Edward, Earl of Warwick",M,"https://en.wikipedia.org/wiki/Edward_Plantagenet,_17th_Earl_of_Warwick",NA,NA
 138,1,60,61,"Margaret Plantagenet, Countess of Salisbury",F,"https://en.wikipedia.org/wiki/Margaret_Pole,_Countess_of_Salisbury",NA,NA
+139,1,NA,NA,Eleanor of Provence,F,https://en.wikipedia.org/wiki/Eleanor_of_Provence,NA,NA
+140,1,142,143,"Henry II, King of England",M,https://en.wikipedia.org/wiki/Henry_II_of_England,NA,NA
+141,1,NA,NA,"Eleanor, Duchess of Aquitaine",F,https://en.wikipedia.org/wiki/Eleanor_of_Aquitaine,NA,NA
+142,1,148,144,Empress Matilda,F,https://en.wikipedia.org/wiki/Empress_Matilda,NA,NA
+143,1,NA,NA,"Geoffrey Plantagenet, Count of Anjou",M,"https://en.wikipedia.org/wiki/Geoffrey_Plantagenet,_Count_of_Anjou",NA,NA
+144,1,145,146,"Henry I, King of England",M,https://en.wikipedia.org/wiki/Henry_I_of_England,NA,NA
+145,1,NA,NA,Matilda of Flanders,F,https://en.wikipedia.org/wiki/Matilda_of_Flanders,NA,NA
+146,1,NA,NA,William the Conqueror,M,https://en.wikipedia.org/wiki/William_the_Conqueror,NA,NA
+147,1,148,144,William Adelin,M,https://en.wikipedia.org/wiki/William_Adelin,NA,NA
+148,1,NA,NA,Matilda of Scotland,F,https://en.wikipedia.org/wiki/Matilda_of_Scotland,NA,NA
+149,1,139,112,Edward I of England,M,https://en.wikipedia.org/wiki/Edward_I_of_England,NA,NA
+150,1,NA,NA,Eleanor of Castile,F,https://en.wikipedia.org/wiki/Eleanor_of_Castile,NA,NA
+151,1,NA,NA,Isabel of Beaumont,F,https://en.wikipedia.org/wiki/Isabel_of_Beaumont,NA,NA
