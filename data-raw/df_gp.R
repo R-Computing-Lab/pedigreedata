@@ -125,7 +125,10 @@ mom_corrections <- c(
   "0108.42" = "108",
   "0108.43" = "108",
   "0108.44" = "108",
-  "008535322.1" = "00853532.02"
+  "008535322.1" = "00853532.02",
+  "01323.1" = "0132.3",
+  "030621.41" = "0306.21",
+  "030621.42" = "0306.21"
 )
 
 
@@ -156,21 +159,36 @@ ped <- read_delim("data-raw/Pedigree4G.csv",
   ) %>%
   mutate(
     ID = case_when(
+      ID == "01553422.1" & momID == "015534.22" ~ "01553422.01",
+      ######
       ID == "01553422.21" & momID == "0155342.2" ~ "015534202.21",
       ID == "0083233.21" & momID == "008323.3" ~ "00832303.21",
       ID == "00853532.2" & momID == "0085353.2" ~ "00853532.02",
       ID == "00853532.21" & momID == "0085353.2" ~ "008535302.21",
       ID == "00853532.22" & momID == "0085353.2" ~ "008535302.22",
       ID == "01553421.1" & momID == "0155342.1" ~ "015534201.1",
-      ID == "01553422.1" & momID == "015534.22" ~ "01553422.01",
       ID == "01553424.3" & momID == "0155342.4" ~ "01553424.03",
+      ID == "01553421.2" & momID == "0155342.1" ~ "015534201.2",
+      ID == "01553421.3" & momID == "0155342.1" ~ "015534201.3",
+      ID == "01553422.1" & momID == "0155342.2" ~ "015534202.1",
+      ID == "01553422.22" & momID == "0155342.2" ~ "015534202.22",
+      ID == "01553422.23" & momID == "0155342.2" ~ "015534202.23",
+      ID == "01553422.31" & momID == "0155342.2" ~ "015534202.31",
+      ID == "01553422.32" & momID == "0155342.2" ~ "015534202.32",
+      ID == "01553422.33" & momID == "0155342.2" ~ "015534202.33",
+      ID == "01553422.34" & momID == "0155342.2" ~ "015534202.34",
+      ID == "01553424.1" & momID == "0155342.4" ~ "015534204.1",
+      ID == "01553424.21" & momID == "0155342.4" ~ "015534204.21",
+      ID == "01553424.2" & momID == "0155342.4" ~ "015534204.2",
+      ID == "01553424.22" & momID == "0155342.4" ~ "015534204.22",
+      ID == "01553424.23" & momID == "0155342.4" ~ "015534204.23",
       TRUE ~ ID
     )
   )
 
 
 # check for duplicate IDs
-dup_id <- ped %>%
+ped_dup_id <- dup_id <- ped %>%
   group_by(ID) %>%
   summarise(n = n()) %>%
   filter(n > 1) %>%
@@ -222,10 +240,26 @@ pheno <- read_delim("data-raw/FenotiposPesos90.csv",
       ID == "00853532.22" & momID == "0085353.2" ~ "008535302.22",
       ID == "01553421.1" & momID == "0155342.1" ~ "015534201.1",
       ID == "01553424.3" & momID == "0155342.4" ~ "01553424.03",
+      ID == "01553421.2" & momID == "0155342.1" ~ "015534201.2",
+      ID == "01553421.3" & momID == "0155342.1" ~ "015534201.3",
+      ID == "01553422.1" & momID == "0155342.2" ~ "015534202.1",
+      ID == "01553422.22" & momID == "0155342.2" ~ "015534202.22",
+      ID == "01553422.23" & momID == "0155342.2" ~ "015534202.23",
+      ID == "01553422.31" & momID == "0155342.2" ~ "015534202.31",
+      ID == "01553422.32" & momID == "0155342.2" ~ "015534202.32",
+      ID == "01553422.33" & momID == "0155342.2" ~ "015534202.33",
+      ID == "01553422.34" & momID == "0155342.2" ~ "015534202.34",
+      ID == "01553424.1" & momID == "0155342.4" ~ "015534204.1",
+      ID == "01553424.21" & momID == "0155342.4" ~ "015534204.21",
+      ID == "01553424.2" & momID == "0155342.4" ~ "015534204.2",
+      ID == "01553424.22" & momID == "0155342.4" ~ "015534204.22",
+      ID == "01553424.23" & momID == "0155342.4" ~ "015534204.23",
+      ID == "02502121.3" & momID == "025021.21" & sexo == "M" ~ "02502121.03", # there are two complete records with the same ID
       TRUE ~ ID
     )
   )
-dup_id <- pheno %>%
+
+pheno_dup_id <- dup_id <- pheno %>%
   group_by(ID) %>%
   summarise(n = n()) %>%
   filter(n > 1) %>%
@@ -235,8 +269,7 @@ dup_id <- pheno %>%
 # [9] "01553422.23" "01553422.31" "01553422.32" "01553422.33" "01553422.34" "01553424.1"  "01553424.2"  "01553424.21"
 # [17] "01553424.22" "01553424.23" "01553424.3"  "02502121.3"
 id_check <- dup_id[1]
-
-pheno %>% filter(ID %in% id_check | momID %in% id_check | dadID %in% id_check) -> test_df
+test_df <- pheno %>% filter(ID %in% id_check | momID %in% id_check | dadID %in% id_check)
 
 # View(test_df)
 
@@ -256,10 +289,12 @@ if (length(dup_id) > 0) {
   message("No duplicate IDs found.")
 }
 
-
+#---------
 # check if mom and dad id match across the two datasets
 
-ped_check <- left_join(ped, pheno, by = "ID", suffix = c(".ped", ".data")) %>%
+ped_check <- left_join(ped, pheno,
+  by = "ID", suffix = c(".ped", ".data")
+) %>%
   filter(!is.na(dadID.ped) & !is.na(dadID.data) & dadID.ped != dadID.data |
     !is.na(momID.ped) & !is.na(momID.data) & momID.ped != momID.data)
 
@@ -273,7 +308,7 @@ guinea_pigs <- ped %>%
   ped2fam(personID = "ID", famID = "famID")
 
 # check for duplicate IDs
-dup_id <- guinea_pigs %>%
+gp_dup_id <- dup_id <- guinea_pigs %>%
   group_by(ID) %>%
   summarise(n = n()) %>%
   filter(n > 1) %>%
@@ -301,11 +336,12 @@ guinea_pigs_repaired <- recodeSex(guinea_pigs,
 )
 
 
-checkParentIDs(ped = guinea_pigs_repaired,
-  addphantoms       = F,
-  repair            = TRUE,
+checkParentIDs(
+  ped = guinea_pigs_repaired,
+  addphantoms = F,
+  repair = TRUE,
   parentswithoutrow = FALSE,
-  repairsex         = TRUE
+  repairsex = TRUE
 )
 
 checkIDs(guinea_pigs_repaired)
