@@ -1,8 +1,15 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>/404.html</loc></url>
+<url><loc>/articles/article/tutorialmanuscript.html</loc></url>
+<url><loc>/articles/guinea-pig.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/articles/red-squirrels.html</loc></url>
+<url><loc>/articles/wars-of-the-roses.html</loc></url>
 <url><loc>/authors.html</loc></url>
 <url><loc>/index.html</loc></url>
-<url><loc>/reference/hello.html</loc></url>
+<url><loc>/reference/guinea_pigs.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/red_squirrels.html</loc></url>
+<url><loc>/reference/war_of_the_roses.html</loc></url>
 </urlset>
 
