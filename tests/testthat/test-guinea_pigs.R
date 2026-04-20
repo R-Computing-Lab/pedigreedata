@@ -66,6 +66,11 @@ test_that("guinea_pigs parent IDs refer to known IDs or NA", {
   known_ids <- guinea_pigs$ID
   dad_ids <- guinea_pigs$dadID[!is.na(guinea_pigs$dadID)]
   mom_ids <- guinea_pigs$momID[!is.na(guinea_pigs$momID)]
+
+  sum(dad_ids %in% known_ids)/length(dad_ids)
+  sum(mom_ids %in% known_ids)/length(mom_ids)
+  dad_ids[!dad_ids %in% known_ids]
+
   expect_true(all(dad_ids %in% known_ids))
   expect_true(all(mom_ids %in% known_ids))
 })

@@ -301,7 +301,7 @@ guinea_pigs_repaired <- recodeSex(guinea_pigs,
 )
 
 
-checkParentIDs(
+checkParentIDs(ped = guinea_pigs_repaired,
   addphantoms       = F,
   repair            = TRUE,
   parentswithoutrow = FALSE,
