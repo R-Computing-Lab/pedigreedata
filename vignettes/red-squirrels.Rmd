@@ -16,6 +16,9 @@ knitr::opts_chunk$set(
   fig.width = 7,
   fig.height = 4.5
 )
+options(rmarkdown.html_vignette.check_title = FALSE)
+
+
 ```
 
 # Overview
@@ -37,6 +40,7 @@ library(ggplot2)
 library(dplyr)
 library(quadprog)
 library(ggpedigree)
+library(BGmisc)
 data(red_squirrels)
 head(red_squirrels)
 ```
