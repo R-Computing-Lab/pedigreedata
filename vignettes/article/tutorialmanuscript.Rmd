@@ -50,8 +50,8 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 
 In behavior geneticists quest to understanding the relative contributions of genetic and
 environmental factors to phenotypic variation, they have long relied on the classical twin design.
-By comparing the simiarly of monozygotic (MZ) twins -- who share essentially all their DNA -- to
-that of dizygotic (DZ) twins -- who share on average half their segregating alleles -- researchers
+By comparing the simiarly of monozygotic twins (MZ; who share essentially all their DNA) to
+that of dizygotic twins (DZ; who share on average half their segregating alleles) researchers
 can partition phenotypic variance into additive genetic ($a^2$), shared environmental ($c^2$), and
 nonshared environmental ($e^2$) components [@plomin2016; @neale2004]. The twin design is elegant
 precisely because it requires only two types of pairs to identify three parameters.
@@ -71,7 +71,7 @@ additional information about the genetic and environmental architecture of the p
 <!-- cite https://helda.helsinki.fi/server/api/core/bitstreams/f0b6dc08-69df-449e-a8fe-e2c78abf7f60/content -->
 
 The extended pedigree model, which we have introduced elsewhere (see ETC), leverages the full range
-of kinship coefficients in a pedigree to identify a richer set of variance components than the
+of relatives in a pedigree to identify a richer set of variance components than the
 classical twin design. By including multiple types of relatives, researchers can estimate not only
 additive genetic variance but also dominance, shared environmental variance, and even more complex
 interactions. This tutorial demonstrates how to fit extended pedigree models using the BGmisc
@@ -93,7 +93,7 @@ components.
 Extended pedigree designs have been used in behavior genetics since at least the 1970s [@eaves1978; @fulker_multiple_1988], but they have remained a minority practice. Partially, this is  over concerns about model identification and power [@wilson1982], the complexity of fitting these models, and the relative costs of collecting twin data compared to extended family data. But also because the twin design has been so successful and widely adopted. The classical twin design is often
 seen as the "gold standard" in behavior genetics, and many researchers may be hesitant to deviate
 from this established approach. Additionally, many  datasets simply do not include the
-necessary kinship informaiton to fit extended pedigree models, which may limit their applicability in
+necessary kinship information to fit extended pedigree models, which may limit their applicability in
 certain contexts.
 
 
