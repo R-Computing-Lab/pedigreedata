@@ -127,10 +127,10 @@ Garrison</h4>
 <p>In behavior geneticists quest to understanding the relative
 contributions of genetic and environmental factors to phenotypic
 variation, they have long relied on the classical twin design. By
-comparing the simiarly of monozygotic (MZ) twins – who share essentially
-all their DNA – to that of dizygotic (DZ) twins – who share on average
-half their segregating alleles – researchers can partition phenotypic
-variance into additive genetic
+comparing the simiarly of monozygotic twins (MZ; who share essentially
+all their DNA) to that of dizygotic twins (DZ; who share on average half
+their segregating alleles) researchers can partition phenotypic variance
+into additive genetic
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>a</mi><mn>2</mn></msup><annotation encoding="application/x-tex">a^2</annotation></semantics></math>),
 shared environmental
 (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>c</mi><mn>2</mn></msup><annotation encoding="application/x-tex">c^2</annotation></semantics></math>),
@@ -161,21 +161,20 @@ of the phenotype.<span class="citation">(Hur and Craig 2012; Hur et al.
 2019)</span>
 <!-- cite https://helda.helsinki.fi/server/api/core/bitstreams/f0b6dc08-69df-449e-a8fe-e2c78abf7f60/content --></p>
 <p>The extended pedigree model, which we have introduced elsewhere (see
-ETC), leverages the full range of kinship coefficients in a pedigree to
-identify a richer set of variance components than the classical twin
-design. By including multiple types of relatives, researchers can
-estimate not only additive genetic variance but also dominance, shared
-environmental variance, and even more complex interactions. This
-tutorial demonstrates how to fit extended pedigree models using the
-BGmisc package and OpenMx, applying the model to multiple datasets
-across empirically distinct settings: the National Longitudinal Survey
-of Youth (a large human panel study with researcher-linked kinship), the
-Kluane Red Squirrel Project (a multi-generational animal field study),
-and a children-of-twins dataset. In each case, fitting the extended
-pedigree model on data the researcher already possesses – but typically
-discards. We provide reproducible code for each application and
-practical guidance on identification, starting values, and the
-interpretation of results.</p>
+ETC), leverages the full range of relatives in a pedigree to identify a
+richer set of variance components than the classical twin design. By
+including multiple types of relatives, researchers can estimate not only
+additive genetic variance but also dominance, shared environmental
+variance, and even more complex interactions. This tutorial demonstrates
+how to fit extended pedigree models using the BGmisc package and OpenMx,
+applying the model to multiple datasets across empirically distinct
+settings: the National Longitudinal Survey of Youth (a large human panel
+study with researcher-linked kinship), the Kluane Red Squirrel Project
+(a multi-generational animal field study), and a children-of-twins
+dataset. In each case, fitting the extended pedigree model on data the
+researcher already possesses – but typically discards. We provide
+reproducible code for each application and practical guidance on
+identification, starting values, and the interpretation of results.</p>
 <p>The extended pedigree model addresses this gap directly. Rather than
 relying on a single MZ/DZ contrast, it leverages the full spectrum of
 pairwise kinship coefficients available in a family dataset: 1.0 for
@@ -196,7 +195,7 @@ been so successful and widely adopted. The classical twin design is
 often seen as the “gold standard” in behavior genetics, and many
 researchers may be hesitant to deviate from this established approach.
 Additionally, many datasets simply do not include the necessary kinship
-informaiton to fit extended pedigree models, which may limit their
+information to fit extended pedigree models, which may limit their
 applicability in certain contexts.</p>
 <p>In contrast, similar models are common in plant and animal breeding,
 where pedigree data is more routinely collected and analyzed.</p>
@@ -214,28 +213,27 @@ wide range of family structures into their analyses.</p>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-eaves1978" class="csl-entry">
 Eaves, Lindon J, K A Last, P A Young, and N G Martin. 1978.
 <span>“Model-Fitting Approaches to the Analysis of Human
 Behaviour.”</span> <em>Heredity</em> 41 (3): 249–320. <a href="https://doi.org/10.1038/hdy.1978.101" class="external-link">https://doi.org/10.1038/hdy.1978.101</a>.
 </div>
 <div id="ref-hur2019" class="csl-entry">
-Hur, Yoon-Mi, Leonie H. Bogl, Juan R. Ordoñana, Jeanette Taylor, Sara A.
-Hart, Catherine Tuvblad, Eivind Ystrom, Christine Dalgård, Axel Skytthe,
-and Gonneke Willemsen. 2019. <span>“Twin Family Registries Worldwide: An
-Important Resource for Scientific Research.”</span> <em>Twin Research
-and Human Genetics</em> 22 (6): 1–11. <a href="https://doi.org/10.1017/thg.2019.121" class="external-link">https://doi.org/10.1017/thg.2019.121</a>.
+Hur, Yoon-Mi, Leonie H. Bogl, Juan R. Ordoñana, et al. 2019. <span>“Twin
+Family Registries Worldwide: An Important Resource for Scientific
+Research.”</span> <em>Twin Research and Human Genetics</em> 22 (6):
+1–11. <a href="https://doi.org/10.1017/thg.2019.121" class="external-link">https://doi.org/10.1017/thg.2019.121</a>.
 </div>
 <div id="ref-hur2012" class="csl-entry">
 Hur, Yoon-Mi, and Jeffrey M Craig. 2012. <span>“Twin Registries
 Worldwide: An Important Resource for Scientific Research.”</span>
-<em>Twin Research and Human Genetics</em> 16 (1): 1–12. <a href="https://doi.org/f4pfck" class="external-link">https://doi.org/f4pfck</a>.
+<em>Twin Research and Human Genetics</em> 16 (1): 1–12. <a href="https://doi.org/10/f4pfck" class="external-link">https://doi.org/10/f4pfck</a>.
 </div>
 <div id="ref-neale2004" class="csl-entry">
 Neale, Michael C., and Hermine H M Maes. 2004. <em>Methodology for
-Genetic Studies of Twins and Families</em>. Vol. 48. Dordrecht, The
-Netherlands: Kluwer Academic Publishers B.V. <a href="https://doi.org/10.1136/jmg.30.9.800-a" class="external-link">https://doi.org/10.1136/jmg.30.9.800-a</a>.
+Genetic Studies of Twins and Families</em>. Vol. 48. Kluwer Academic
+Publishers B.V. <a href="https://doi.org/10.1136/jmg.30.9.800-a" class="external-link">https://doi.org/10.1136/jmg.30.9.800-a</a>.
 </div>
 <div id="ref-plomin2016" class="csl-entry">
 Plomin, Robert, John C. DeFries, Valerie S Knopik, and Jenae M.
