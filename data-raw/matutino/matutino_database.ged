@@ -1,0 +1,308 @@
+﻿0 HEAD
+1 SOUR AHN
+2 VERS 2.99p
+2 NAME Ahnenblatt
+2 CORP Dirk Boettcher
+1 DATE 25 MAY 2026
+2 TIME 1:50:50
+1 SUBM @SUBM@
+1 FILE matutino_database.ged
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+1 _ORGSOUR AHN + The Next Generation of Genealogy Sitebuilding
+2 NAME Ahnenblatt + The Next Generation of Genealogy Sitebuilding (R)
+2 VERS 2.99h + 13.1.1
+1 _NAVM 2
+2 _NAVI @I7@
+1 _HOME @I7@
+0 @I7@ INDI
+1 _UID D0AE3B66DC8F478886D7513780FC8153
+1 NAME Nicolasa /Arada/
+2 SURN Arada
+2 GIVN Nicolasa
+1 SEX F
+1 FAMC @F4@
+1 DEAT
+2 DATE 1932
+2 PLAC Sara, Provinz Iloilo, Philippinen
+1 CHAN
+2 DATE 25 MAY 2026
+3 TIME 0:36:31
+1 NOTE Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+0 @I9@ INDI
+1 _UID BDD9426C054C4E44ABD7634DA67E8928
+1 NAME Don Guillermo /Arada/
+2 SURN Arada
+2 GIVN Guillermo
+2 NPFX Don
+1 SEX M
+1 CHAN
+2 DATE 25 MAY 2026
+3 TIME 1:48:44
+1 FAMS @F4@
+1 BIRT
+2 DATE ABT 1856
+1 NOTE - Cabeza de Barangay. Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253, https://doi.org/10.5281/zenodo.20076256
+1 FAMC @F3581@
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253, https://doi.org/10.5281/zenodo.20076256
+1 OCCU Cabeza de Barangay
+0 @I10@ INDI
+1 _UID 467E7A3B068E410D94AEAAF917FB79B4
+1 NAME Doña Leoncia /Matutino/
+2 SURN Matutino
+2 GIVN Leoncia
+2 NPFX Doña
+1 SEX F
+1 FAMS @F4@
+1 CHAN
+2 DATE 25 MAY 2026
+3 TIME 0:36:25
+1 FAMC @F3550@
+1 BIRT
+2 DATE 1863
+1 NOTE Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+0 @I9069@ INDI
+1 _UID A1EB2E84AF854E16A1E7E2CEE9DCCDFF9F46
+1 NAME Raymundo /Matutino/
+2 SURN Matutino
+2 GIVN Raymundo
+1 SEX M
+1 CHAN
+2 DATE 24 MAY 2026
+3 TIME 22:26:05
+1 FAMS @F3550@
+1 BIRT
+2 DATE 1827
+1 FAMC @F3557@
+1 NOTE Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+0 @I9070@ INDI
+1 _UID 514E552BB93F46789D8008D6DCE29D7CA75E
+1 NAME Lorenza /Aberde/
+2 SURN Aberde
+2 GIVN Lorenza
+1 SEX F
+1 FAMS @F3550@
+1 CHAN
+2 DATE 24 MAY 2026
+3 TIME 22:26:12
+1 BIRT
+2 DATE 1837
+1 NOTE Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+0 @I9073@ INDI
+1 _UID 33B5E33DA4CF47CCA06FDD172E0546FA04CC
+1 NAME Mamerto /Castagno/
+2 SURN Castagno
+2 GIVN Mamerto
+1 SEX M
+1 CHAN
+2 DATE 25 MAY 2026
+3 TIME 0:35:49
+1 FAMS @F3551@
+1 NOTE Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20076256
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20076256
+0 @I9081@ INDI
+1 _UID A740B3A2EA264F0E853010027A05F5AE92D3
+1 NAME Ignacio /Matutino/
+2 SURN Matutino
+2 GIVN Ignacio
+1 SEX M
+1 CHAN
+2 DATE 25 MAY 2026
+3 TIME 1:49:45
+1 FAMS @F3557@
+1 FAMC @F3555@
+1 NOTE - Cabeza de Barangay and Gobernadorcillo during the Spanish colonial period. Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 OCCU Cabeza de Barangay and Gobernadorcillo
+0 @I9089@ INDI
+1 _UID 666FE69361524C6DB0F2B8D86DE63154C48D
+1 NAME Maria Consuelo /Alejandrino/
+2 SURN Alejandrino
+2 GIVN Maria Consuelo
+1 SEX F
+1 FAMS @F3557@
+1 CHAN
+2 DATE 18 DEC 2025
+3 TIME 14:09:49
+0 @I9090@ INDI
+1 _UID B6A38D9CAC57416B9E1DB19440549B0C6CAC
+1 NAME Felipe /Matutino/
+2 SURN Matutino
+2 GIVN Felipe
+1 SEX M
+1 CHAN
+2 DATE 25 MAY 2026
+3 TIME 1:49:36
+1 FAMS @F3555@
+1 FAMC @F3561@
+1 NOTE - Cabeza de Barangay and Gobernadorcillo during the Spanish colonial period. Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 OCCU Cabeza de Barangay and Gobernadorcillo
+0 @I9091@ INDI
+1 _UID 23829C6155BC45748EF9BC5846BDA931E44A
+1 NAME Carmen /Ledesma/
+2 SURN Ledesma
+2 GIVN Carmen
+1 SEX F
+1 FAMS @F3555@
+1 CHAN
+2 DATE 24 MAY 2026
+3 TIME 22:25:47
+1 NOTE Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+0 @I9097@ INDI
+1 _UID C83D92D4AE844859B9F082FF43D58FB5C455
+1 NAME Diego /Matutino/
+2 SURN Matutino
+2 GIVN Diego
+1 SEX M
+1 CHAN
+2 DATE 25 MAY 2026
+3 TIME 1:50:05
+1 FAMS @F3561@
+1 FAMC @F3562@
+1 NOTE - Cabeza de Barangay and Gobernadorcillo during the Spanish colonial period. Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 OCCU Cabeza de Barangay and Gobernadorcillo
+0 @I9098@ INDI
+1 _UID 2412D5B0CB8447A99D6F47F17EB9A8021F90
+1 NAME Isabel /de la Cruz/
+2 SURN de la Cruz
+2 GIVN Isabel
+1 SEX F
+1 FAMS @F3561@
+1 CHAN
+2 DATE 24 MAY 2026
+3 TIME 22:25:28
+1 NOTE Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+0 @I9099@ INDI
+1 _UID C0271F71D8F545B29AE53327021B84964B52
+1 NAME Juan /Matutino/
+2 SURN Matutino
+2 GIVN Juan
+1 SEX M
+1 CHAN
+2 DATE 25 MAY 2026
+3 TIME 1:50:13
+1 FAMS @F3562@
+1 FAMC @F3563@
+1 NOTE - Member of the Principalia. Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+0 @I9100@ INDI
+1 _UID 33E83969C51048A3BE22C269785DA44A4BB2
+1 NAME Catalina /Lopez/
+2 SURN Lopez
+2 GIVN Catalina
+1 SEX F
+1 FAMS @F3562@
+1 CHAN
+2 DATE 24 MAY 2026
+3 TIME 22:24:29
+1 NOTE Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+0 @I9101@ INDI
+1 _UID AC5E3E63F68143DDB90E1B9B9290252D3365
+1 NAME Felipe /Matutino/
+2 SURN Matutino
+2 GIVN Felipe
+1 SEX M
+1 CHAN
+2 DATE 25 MAY 2026
+3 TIME 1:50:22
+1 FAMS @F3563@
+1 NOTE - First known ancestor. Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+0 @I9102@ INDI
+1 _UID F3E4E36771D040678752CEF821B4DFD935E5
+1 NAME Maria /de los Reyes/
+2 SURN de los Reyes
+2 GIVN Maria
+1 SEX F
+1 FAMS @F3563@
+1 CHAN
+2 DATE 24 MAY 2026
+3 TIME 22:24:15
+1 NOTE Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20278253
+0 @I9103@ INDI
+1 _UID 1C266482BEB64D43ADFFBA2A9B608A91D2E3
+1 NAME Ignacio /Arada/
+2 SURN Arada
+2 GIVN Ignacio
+1 SEX M
+1 FAMC @F3551@
+1 BIRT
+2 DATE ABT 1822
+1 CHAN
+2 DATE 25 MAY 2026
+3 TIME 0:49:06
+1 FAMS @F3581@
+1 NOTE Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20076256
+1 SOUR Fully documented in scientific paper, https://doi.org/10.5281/zenodo.20076256
+0 @I9145@ INDI
+1 _UID 3EE0F168C0F94C20BEF0876ABBD8D5A245BD
+1 NAME Petrona /Aposaga/
+2 SURN Aposaga
+2 GIVN Petrona
+1 SEX F
+1 FAMS @F3581@
+1 NOTE Fully documented in scientific paper, https://doi.org/10.6084/m9.figshare.32231028
+1 SOUR Fully documented in scientific paper, https://doi.org/10.6084/m9.figshare.32231028
+1 CHAN
+2 DATE 25 MAY 2026
+3 TIME 0:36:02
+0 @F4@ FAM
+1 HUSB @I9@
+1 WIFE @I10@
+1 CHIL @I7@
+1 MARR Y
+0 @F3550@ FAM
+1 HUSB @I9069@
+1 WIFE @I9070@
+1 CHIL @I10@
+1 MARR Y
+0 @F3551@ FAM
+1 HUSB @I9073@
+1 CHIL @I9103@
+0 @F3555@ FAM
+1 HUSB @I9090@
+1 WIFE @I9091@
+1 CHIL @I9081@
+1 MARR Y
+0 @F3557@ FAM
+1 HUSB @I9081@
+1 WIFE @I9089@
+1 CHIL @I9069@
+1 MARR Y
+0 @F3561@ FAM
+1 HUSB @I9097@
+1 WIFE @I9098@
+1 CHIL @I9090@
+1 MARR Y
+0 @F3562@ FAM
+1 HUSB @I9099@
+1 WIFE @I9100@
+1 CHIL @I9097@
+1 MARR Y
+0 @F3563@ FAM
+1 HUSB @I9101@
+1 WIFE @I9102@
+1 CHIL @I9099@
+1 MARR Y
+0 @F3581@ FAM
+1 HUSB @I9103@
+1 WIFE @I9145@
+1 CHIL @I9@
+1 MARR Y
+0 @SUBM@ SUBM
+1 NAME Karl Romeo Lacson
+1 ADDR 
+2 CONT Verein für Familienkunde in Baden-Württemberg e.V.
+0 TRLR
