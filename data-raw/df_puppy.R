@@ -88,16 +88,25 @@ puppy_repaired_dt <- as.data.table(puppy_repaired)
 
 df_summarizePedigrees <- summarizePedigrees(personID="personID",
                                               puppy_repaired_dt, byr = "year_of_birth", verbose = TRUE)
-
-pedadd <- ped2com(ped = puppy_repaired,component = "additive",
+puppy_repaired_skin <- puppy_repaired %>% ped2fam(personID="personID") %>%
+  filter(litterID<155) %>%
+  select(personID, momID, dadID, famID, sex) %>%
+  mutate(personID = as.character(personID),
+         momID = as.character(momID),
+         dadID = as.character(dadID),
+         famID = as.character(famID))
+pedadd <- ped2com(ped = puppy_repaired_skin,component = "additive",
                   personID = "personID",
                   momID = "momID",
                   dadID = "dadID",
+
                   verbose = TRUE,
                   sparse=F,
-                  force_symmetric = FALSE,
-                  mz_twins =F,
-                  isChild_method = "classic")
+                  saveable =T)
+               #   force_symmetric = T,
+                 # mz_twins =F,
+               #   adjacency_method = "loop",
+                #  isChild_method = "classic")
 diag(pedadd) %>% summary()
 
 }
@@ -108,4 +117,31 @@ if (checkis_acyclic$is_acyclic) {
   usethis::use_data(puppy, overwrite = TRUE, compress = "xz")
 } else {
   message("The pedigree contains cyclic relationships.")
+}
+
+if(FALSE){
+
+  library(BGmisc)
+library(ggpedigree)
+  data("redsquirrels")
+
+  # Set up the data
+  #  sumped <- BGmisc::summarizePedigrees(redsquirrels,
+  #    famID = "famID",
+  #    personID = "personID",
+  #    nbiggest = 5
+  #  )
+
+
+  # Set target family for visualization
+  fam_filter <- 160 # sumped$biggest_families$famID[3]
+
+  # Filter for reasonably sized family, recode sex if needed
+  ped_filtered <- redsquirrels %>%
+    BGmisc::recodeSex(code_female = "F") %>%
+    dplyr::filter(famID == fam_filter)
+
+  # Calculate relatedness matrices
+  add_mat <- BGmisc::ped2add(ped_filtered, isChild_method = "partialparent", sparse = FALSE)
+diag(add_mat) %>% summary()
 }
