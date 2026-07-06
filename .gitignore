@@ -4,3 +4,5 @@
 .Ruserdata
 /.claude
 .positai
+/checkpoint
+/checkpoint_sq

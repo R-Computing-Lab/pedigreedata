@@ -86,3 +86,24 @@ validate_id_convention <- function(df, verbose = TRUE) {
   if (verbose) message("All ", n_checked, " child IDs follow the maternal naming convention.")
   TRUE
 }
+
+
+
+mx_safe_id <- function(x) {
+  x <- as.character(x)
+
+  # Avoid scientific notation if IDs are numeric-like
+  x <- ifelse(
+    grepl("^[0-9]+(\\.[0-9]+)?$", x),
+    format(as.numeric(x), scientific = FALSE, trim = TRUE),
+    x
+  )
+
+  # Replace anything OpenMx may reject
+  x <- gsub("[^A-Za-z0-9_]", "_", x)
+
+  # Force nonnumeric first character
+  x <- ifelse(grepl("^[0-9]", x), paste0("id_", x), x)
+
+  make.unique(x, sep = "_")
+}
