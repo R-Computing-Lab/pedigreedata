@@ -113,7 +113,7 @@ checkis_acyclic
 
 if (checkis_acyclic$is_acyclic) {
   message("The pedigree is acyclic.")
-  write_csv(puppy_ped, here("data-raw", "puppy.csv"))
+  write_csv(puppy_repaired, here("data-raw", "puppy.csv"))
   usethis::use_data(puppy_ped, overwrite = TRUE, compress = "xz")
 } else {
   message("The pedigree contains cyclic relationships.")
@@ -125,7 +125,9 @@ if (checkis_acyclic$is_acyclic) {
 
 puppy_skinny <- puppy_repaired %>% ped2fam(personID="ID") %>%
  # filter(litterID<155) %>%
-  select(personID=ID , momID, dadID, famID, sex, weight_at_birth_g, birthYear=year_of_birth) %>%
+  select(personID=ID , momID, dadID, famID, sex, weight_at_birth_g, birthYear=year_of_birth,
+         litterID
+         ) %>%
   mutate( birth_year_scaled = scale(birthYear)) %>%
   checkParentIDs(repair = TRUE, parentswithoutrow = TRUE)
 
@@ -211,12 +213,13 @@ family_peds <- families %>%
       y = fam$weight_at_birth_g[!is.na(fam$weight_at_birth_g)],
       birth_year_scaled = fam$birth_year_scaled[!is.na(fam$weight_at_birth_g)],
       post_mean = fam$post_mean[!is.na(fam$weight_at_birth_g)],
-      sex = fam$sex[!is.na(fam$weight_at_birth_g)]
+      sex = fam$sex[!is.na(fam$weight_at_birth_g)],
+      litterID = fam$litterID[!is.na(fam$weight_at_birth_g)]
     )
   })
 
 ggplot2::ggplot(family_peds) +
-  ggplot2::geom_point(ggplot2::aes(x = birth_year_scaled, y = y, color = post_mean, shape = sex)) +
+  ggplot2::geom_point(ggplot2::aes(x = birth_year_scaled, y = y, color = litterID, shape = sex)) +
 #  ggplot2::facet_wrap(~fam) +
   ggplot2::theme_bw() +
   ggplot2::labs(title = "Phenotypes over time", x = "Scaled Birth Year", y = "Phenotype (y)")
@@ -326,7 +329,7 @@ ggplot2::ggplot(graphing_data_long) +
 # Optional AME test after AE runs
 # -----------------------------------------------------------------------------
 
-run_optional_ame <- T
+run_optional_ame <- F
 
 if (run_optional_ame) {
   ame_group_models <- vector("list", n_families)
