@@ -6,3 +6,7 @@
 .positai
 /checkpoint
 /checkpoint_sq
+data-raw/sheep/dryadsnpdata.ped
+data/fitted_multi_model_n3000.rds
+fit_ae0.7z
+fit_ae0.rds
