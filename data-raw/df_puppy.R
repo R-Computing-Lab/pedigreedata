@@ -114,7 +114,7 @@ checkis_acyclic
 if (checkis_acyclic$is_acyclic) {
   message("The pedigree is acyclic.")
   write_csv(puppy_repaired, here("data-raw", "puppy.csv"))
-  usethis::use_data(puppy_ped, overwrite = TRUE, compress = "xz")
+  usethis::use_data(puppy_repaired, overwrite = TRUE, compress = "xz")
 } else {
   message("The pedigree contains cyclic relationships.")
 }
@@ -146,7 +146,8 @@ ped_pup <- ped2fam(
   rename(personID = ID) %>%
   mutate(personID = as.character(personID),
          momID = as.character(momID),
-         dadID = as.character(dadID)
+         dadID = as.character(dadID),
+         scale_birth_year = scale(birthYear)
   )
 
 remove(puppy_skinny)
@@ -305,7 +306,7 @@ graphing_data$estimated_e_variance <- exp(est["b_e_0"] + est["b_e_1"] * graphing
 graphing_data$true_e_variance <- exp(target["b_e_0"] + target["b_e_1"] * graphing_data$time + target["g_e_1"] * graphing_data$historical)
 graphing_data$estimated_total_variance <- graphing_data$estimated_a_variance + graphing_data$estimated_e_variance
 graphing_data$true_total_variance <- graphing_data$true_a_variance + graphing_data$true_e_variance
-graphing_data$unscaled_time <- graphing_data$time * sd(unlist(lapply(families, function(x) x$birth_year_scaled))) + mean(unlist(lapply(families, function(x) x$birth_year_scaled)))
+
 
 graphing_data_long <- # have a true and estimated factor
 graphing_data %>%
@@ -316,7 +317,7 @@ graphing_data %>%
 
 
 ggplot2::ggplot(graphing_data_long) +
-  ggplot2::geom_line(ggplot2::aes(x = unscaled_time, y = variance, linetype = factor(historical),
+  ggplot2::geom_line(ggplot2::aes(x = time, y = variance, linetype = factor(historical),
                                   color = factor(component)
                                   )) +
   ggplot2::labs(title = "Estimated Variance as a function of time and historical moderator", x = "Scaled Birth Year", y = "Estimated Variance", color = "Variance Component") +
